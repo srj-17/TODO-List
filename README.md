@@ -1,5 +1,4 @@
 # TODO list
-- todo
 - [ ] create a todo list app
 	- [ ] brainstorm about how the app should work and how the web-interface should look
 	- [ ] write logic
