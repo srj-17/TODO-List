@@ -1,0 +1,2 @@
+(()=>{"use strict";t=typeof class{constructor(t,s,i,e,h,a){this.title=t,this.description=s,this.duedate=new Date(i),this.priority=e,this.notes=h,this.checklist=a,this.status=!1}toggleStatus(){this.status=!this.status}}})();
+//# sourceMappingURL=main.js.map
