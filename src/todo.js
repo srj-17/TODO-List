@@ -1,6 +1,6 @@
 class Todo {
     constructor(title, description, duedate, priority, notes, checklist) {
-        // todo should be created even if title is not given, project is check for title
+        // todo should be created even if title is not given, project should check for title
         this.title = title;
         this.description = description;
 
