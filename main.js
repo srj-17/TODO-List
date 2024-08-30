@@ -1,2 +1,2 @@
-(()=>{"use strict";t=typeof class{constructor(t,s,i,e,h,a){this.title=t,this.description=s,this.duedate=new Date(i),this.priority=e,this.notes=h,this.checklist=a,this.status=!1}toggleStatus(){this.status=!this.status}}})();
+(()=>{"use strict";const t=class{constructor(t,e,o){this.name=t,this.priority=e,this.dueDate=o?new Date(o):new Date,this.todo=[]}addTodo(t){this.todo.push(t)}};(function(){let e=[];return{addProject:function(o,s,r){let c=new t(o,s,r);e.push(c)},projects:e}})().addProject("best world project",1,"2011-10-1")})();
 //# sourceMappingURL=main.js.map
