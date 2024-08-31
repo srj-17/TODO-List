@@ -14,9 +14,6 @@ class Project {
     addTodo(title, description, duedate, priority, notes, checklist) {
         const newTodo = new todo(title, description, duedate, priority, notes, checklist);
         this.todoList.push(newTodo);
-        console.log(this.todoList);
-        console.log(this.name);
-        console.log(this.priority)
     }
 
     getTodos() {
