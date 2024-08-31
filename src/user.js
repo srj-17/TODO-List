@@ -18,6 +18,12 @@ const user = (function () {
         return projects;
     }
 
+    // id of projects should be updated after deleting in DOM #TODO
+    function deleteProject(id) {
+        let index = id;
+        projects.splice(index, 1);
+    }
+
     function addDirectTodo(title, description, duedate, priority, notes, checklist) {
         let newTodo = new todo(title, description, duedate, priority, notes, checklist);
         directTodos.push(newTodo);

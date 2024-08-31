@@ -16,6 +16,15 @@ class Project {
         this.todoList.push(newTodo);
     }
 
+    // get everything and only edit those that changed
+    // TODO: search for the best way to edit and implement it here, use todo's edit or this type
+    // this type is non-extendible cause you have to modify it 
+    editTodo(id, title, description, duedate, priority, notes, checklist) {
+        let index = id;
+        let todoToEdit = this.todoList.at(index);
+        todoToEdit.edit(title, description, duedate, priority, notes, checklist);
+    }
+
     getTodos() {
         return this.todoList;
     }
