@@ -10,9 +10,9 @@ class Project {
         this.todo = [];
     }
     
-    // we're trusting valid todo to be provided. should we? 
-    addTodo(todo) {
-        this.todo.push(todo);
+    // we're trusting valid todo to be provided. should we? YES Because we're creating a form in html # TODO
+    addTodo(title, description, duedate, priority, notes, checklist) {
+        this.todo.push(new todo(title, description, duedate, priority, notes, checklist));
     }
 
     getTodos() {
