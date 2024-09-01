@@ -20,9 +20,12 @@ class Todo {
     }   
 
     edit(title, description, duedate, priority, notes, checklist) {
-        const index = id;
-        const newTodo = new todo(title, description, duedate, priority, notes, checklist, id);
-        this.todoList.splice()
+        this.title = title;
+        this.description = description;
+        this.duedate = duedate;
+        this.priority = priority;
+        this.notes = notes;
+        this.checklist = checklist;
     }
 }
 
