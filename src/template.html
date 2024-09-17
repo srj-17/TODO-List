@@ -1,28 +1,85 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO</title>
- </head>
- <body>
-    <div class="header">
-      <div class="header-text">
-         TODO
-      </div>
-    </div>
-    <div class="main">
-      <div class="highest-priority-tasks">  
-         
-      </div>
-      <div class="projects-container">
-         <div class="project-container" id="1">
-            Project 1
-         </div>
-         <div class="project-container" id="2">
-            Project 2
-         </div>
-      </div>
-    </div>
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TODO</title>
+    </head>
+    <body>
+        <div class="header">
+            <div class="header-text">
+                TODO
+            </div>
+        </div>
+        <div class="main">
+            <!-- these tasks are uneditable -->
+            <div class="highest-priority-tasks-container">  
+                <div class="highest-priority-tasks-header">
+                    Important Tasks
+                </div>
+                <ul class="highest-priority-tasks">
+                    <li class="highest-priority-task">
+                        <div class="task-title">some task</div>
+                        <div class="task-desc">Description of the task ...</div>
+                        <div class="task-duedate">2072-10-20</div>
+                        <div class="task-completion-status">
+                            <input type="checkbox" name="completed">
+                        </div>
+                    </li>
+                    <li class="highest-priority-task">
+                        <div class="task-title">some task</div>
+                        <div class="task-desc">Description of the task ...</div>
+                        <div class="task-duedate">2072-10-20</div>
+                        <div class="task-completion-status">
+                            <input type="checkbox" name="completed">
+                        </div>
+                    </li>
+                    <li class="highest-priority-task">
+                        <div class="task-title">some task</div>
+                        <div class="task-desc">Description of the task ...</div>
+                        <div class="task-duedate">2072-10-20</div>
+                        <div class="task-completion-status">
+                            <input type="checkbox" name="completed">
+                        </div>
+                    </li>
+                    <li class="highest-priority-task">
+                        <div class="task-title">some task</div>
+                        <div class="task-desc">Description of the task ...</div>
+                        <div class="task-duedate">2072-10-20</div>
+                        <div class="task-completion-status">
+                            <input type="checkbox" name="completed">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--
+                TODO: add clickable dropdown to projects-container
+                to show some of its tasks 
+            -->
+            <div class="projects-container">
+                <div class="projects-container-header">Projects</div>
+                <div class="projects">
+                    <div class="project-container" id="1">
+                        <div class="project-title">Some project</div>
+                        <div class="project-duedate">2070-10-1</div>
+                        <div class="project-dropdown-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
+                        </div>
+                    </div>
+                    <div class="project-container" id="2">
+                        <div class="project-title">Some other project</div>
+                        <div class="project-duedate">2080-10-1</div>
+                        <div class="project-dropdown-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="add-project-button-container">
+                <button class="add-project-button">
+                    Add New Project
+                </button>
+            </div>
+        </div>
+    </body>
+</html>

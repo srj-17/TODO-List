@@ -1,1 +1,101 @@
+* {
+    padding: 0;   
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --std-gap: 10px;
+    --std-padding: 10px;
+    --std-margin: 10px;
+}
+
+body {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 30px;
+}
+
+.header {
+    display: grid;
+    place-items: center;
+}
+
+.header-text {
+    font-size: 3rem;
+}
+
+.main {
+    display: grid;
+    place-content: center;
+    gap: 20px;
+}
+
+.main > * {
+    display: grid;
+    place-content: center;
+}
+
+.highest-priority-tasks-container {
+    display: grid;
+    gap: var(--std-gap);
+}
+
+.highest-priority-tasks-header {
+    display: grid;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+ul.highest-priority-tasks {
+    display: grid;
+    gap: var(--std-gap);
+}
+
+ul.highest-priority-tasks > *{
+    display: grid;
+    grid-auto-flow: column;
+    place-content: center;
+    gap: 20px;
+    padding: 2px 0;
+}
+
+.projects-container {
+    display: grid;
+    justify-content: stretch;
+    gap: var(--std-gap);
+    padding: 2px 0;
+}
+
+.projects-container-header {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.project-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 30px;
+    grid-auto-flow: column;
+}
+
+.project-dropdown-btn {
+    display: grid;
+    align-items: start;
+    justify-content: center;
+}
+
+.project-dropdown-btn {
+    position: relative;
+    bottom: 5px;
+}
+
+.projects {
+    display: grid;
+    gap: var(--std-gap);
+}
+
+ul {
+    list-style-type: none;
+}
+
 
