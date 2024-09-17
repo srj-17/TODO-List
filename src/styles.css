@@ -60,19 +60,19 @@ ul.highest-priority-tasks > *{
     padding: 2px 0;
 }
 
-.projects-container {
+.highest-priority-projects-container {
     display: grid;
     justify-content: stretch;
     gap: var(--std-gap);
     padding: 2px 0;
 }
 
-.projects-container-header {
+.highest-priority-projects-container-header {
     text-align: center;
     font-size: 1.5rem;
 }
 
-.project-container {
+.high-priority-project-container {
     display: grid;
     grid-template-columns: 2fr 1fr 30px;
     grid-auto-flow: column;
@@ -89,7 +89,7 @@ ul.highest-priority-tasks > *{
     bottom: 5px;
 }
 
-.projects {
+.highest-priority-projects {
     display: grid;
     gap: var(--std-gap);
 }
