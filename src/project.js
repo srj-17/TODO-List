@@ -36,6 +36,11 @@ class Project {
         let index = id;
         this.todoList.splice(index, 1);
     }
+
+    // for the 'daily tasks' project
+    changeDuedate(date) {
+        this.todoList.dueDate = date;
+    }
 }
 
 export default Project;

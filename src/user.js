@@ -3,16 +3,15 @@ import todo from './todo';
 
 const user = (function () {
     let projects = [];
-    let todayTodo;
+    let todayTodo = new Project("todayTodo", 1, new Date());
     
     // if todos added at random (outside of projects), they're added to today todos
     // create a new todayTodo with a new date, transfer all of yesterday's todos
-    // to today's todayTodo
-    function createTodayTodo() {
+    // to today's todayTodo 
+    // Do this each time DOM is loaded
+    function updateTodayTodo() {
         if (!(todayTodo.dueDate === new Date())) {
-            let tempTodo = todayTodo;
-            todayTodo = new Project("todayTodo", 1, new Date());
-            todayTodo.todoList = todayTodo.todoList.concat(tempTodo.todoList);
+            todayTodo.changeDueDate(new Date());
         } 
     }
 
