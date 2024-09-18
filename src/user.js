@@ -3,11 +3,18 @@ import todo from './todo';
 
 const user = (function () {
     let projects = [];
+    let todayTodo;
     
-    // if todos added at random (outside of projects), they're added to direct todos
-    // not implemented as project object because it doesn't make sense doing that. 
-    // it doesn't need priority or dueDate because it won't be displayed as project
-    let directTodos = [];
+    // if todos added at random (outside of projects), they're added to today todos
+    // create a new todayTodo with a new date, transfer all of yesterday's todos
+    // to today's todayTodo
+    function createTodayTodo() {
+        if (!(todayTodo.dueDate === new Date())) {
+            let tempTodo = todayTodo;
+            todayTodo = new Project("todayTodo", 1, new Date());
+            todayTodo.todoList = todayTodo.todoList.concat(tempTodo.todoList);
+        } 
+    }
 
     function addProject(name, priority, duedate) {
         let newProject = new project(name, priority, duedate);

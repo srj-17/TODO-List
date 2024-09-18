@@ -5,6 +5,7 @@ class Project {
         this.name = name;
 
         // project priority is just for sorting, don't want any complications here, with todos also having priroty
+        // priority starts with 0
         this.priority = priority;
         this.dueDate = dueDate ? new Date(dueDate) : new Date();
         this.todoList = [];
