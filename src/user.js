@@ -40,7 +40,7 @@ const user = (function () {
         return projects;
     }
 
-    // id of projects should be updated after deleting in DOM #TODO
+    // #TODO id of projects should be updated after deleting in DOM 
     function deleteProject(id) {
         let index = id;
         projects.splice(index, 1);

@@ -25,82 +25,90 @@ body {
     font-size: 3rem;
 }
 
+/* main page gets these stylings */
 .main {
     display: grid;
     place-content: center;
     gap: 20px;
+         * {
+             display: grid;
+             place-content: center;
+         }
+
+         .today-tasks-container {
+             display: grid;
+             gap: var(--std-gap);
+         }
+
+         .today-tasks-header {
+             display: grid;
+             text-align: center;
+             font-size: 1.5rem;
+         }
+
+         ul.today-tasks {
+             display: grid;
+             gap: var(--std-gap);
+         }
+
+         ul.today-tasks > * {
+             display: grid;
+             grid-auto-flow: column;
+             place-content: center;
+             gap: 20px;
+             padding: 2px 0;
+         }
+
+         .add-task-btn {
+             display: grid;
+             place-content: center;
+         }
+
+         .highest-priority-projects-container {
+             display: grid;
+             justify-content: stretch;
+             gap: var(--std-gap);
+             padding: 2px 0;
+         }
+
+         .highest-priority-projects-container-header {
+             text-align: center;
+             font-size: 1.5rem;
+         }
+
+         .high-priority-project-container {
+             display: grid;
+             grid-template-columns: 2fr 1fr 30px;
+             grid-auto-flow: column;
+         }
+
+         .project-dropdown-btn {
+             display: grid;
+             align-items: start;
+             justify-content: center;
+         }
+
+         .project-dropdown-btn > *{
+             position: relative;
+             bottom: 5px;
+         }
+
+         .highest-priority-projects {
+             display: grid;
+             gap: var(--std-gap);
+         }
+
+         ul {
+             list-style-type: none;
+         }
+
+         .see-all-projects-btn button {
+             display: grid;
+             height: 50px;
+             justify-items: center;
+         }
+     }
+
+.projects-page {
+    
 }
-
-.main > * {
-    display: grid;
-    place-content: center;
-}
-
-.highest-priority-tasks-container {
-    display: grid;
-    gap: var(--std-gap);
-}
-
-.highest-priority-tasks-header {
-    display: grid;
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-ul.highest-priority-tasks {
-    display: grid;
-    gap: var(--std-gap);
-}
-
-ul.highest-priority-tasks > *{
-    display: grid;
-    grid-auto-flow: column;
-    place-content: center;
-    gap: 20px;
-    padding: 2px 0;
-}
-
-.add-task-btn {
-    display: grid;
-    place-content: center;
-}
-
-.highest-priority-projects-container {
-    display: grid;
-    justify-content: stretch;
-    gap: var(--std-gap);
-    padding: 2px 0;
-}
-
-.highest-priority-projects-container-header {
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.high-priority-project-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr 30px;
-    grid-auto-flow: column;
-}
-
-.project-dropdown-btn {
-    display: grid;
-    align-items: start;
-    justify-content: center;
-}
-
-.project-dropdown-btn > *{
-    position: relative;
-    bottom: 5px;
-}
-
-.highest-priority-projects {
-    display: grid;
-    gap: var(--std-gap);
-}
-
-ul {
-    list-style-type: none;
-}
-
-
