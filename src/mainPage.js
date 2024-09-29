@@ -90,7 +90,7 @@ let addProjectButton = document.createElement("button");
 addProjectButton.textContent = "Add New Project";
 
 let addProjectButtonContainer = document.createElement("div");
-addProjectButtonContainer.classList.toggle("addProjectButton");
+addProjectButtonContainer.classList.toggle("add-project-btn");
 addProjectButtonContainer.appendChild(addProjectButton);
 
 
