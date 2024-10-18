@@ -25,6 +25,7 @@ body {
     font-size: 3rem;
 }
 
+
 /* main page gets these stylings */
 .main {
     display: grid;
@@ -107,8 +108,23 @@ body {
              height: 50px;
              justify-items: center;
          }
+
      }
 
-.projects-page {
-    
+ .projects-page {
+
+ }
+
+.add-task-dialog {
+    margin: auto;
+    width: 10%;
+    height: 10%;
+    background-color: black;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 10px; 
+}
+
+::backdrop {
+    backdrop-filter: blur(2px);
 }

@@ -1,4 +1,5 @@
-import tasks from "./user"
+import tasks from "./user";
+import addDialog from "./addDialogs";
 
 let main = document.createElement("div");
 main.classList.toggle("main");
@@ -110,6 +111,20 @@ main.appendChild(todayTasksContainer);
 main.appendChild(projectsContainer);
 main.appendChild(addProjectButtonContainer);
 main.appendChild(seeAllProjectsButtonContainer);
+
+
+// after adding all these, we have buttons
+addTaskButton.addEventListener("click", () => {
+    addDialog.addTask.showModal();
+});
+
+addProjectButton.addEventListener('click', () => {
+    console.log("hello, project")
+});
+
+seeAllProjectsButton.addEventListener('click', () => {
+    console.log("hello, allprojects")
+});
 
 // get body of the current document, and attach the main elements to it
 function renderMain() {
