@@ -117,12 +117,39 @@ body {
 
 .add-task-dialog {
     margin: auto;
-    width: 10%;
-    height: 10%;
-    background-color: black;
+    /*width: 10%;*/
+    /*height: 10%;*/
+    background-color: magenta;
     border: 3px solid black;
     border-radius: 10px;
     padding: 10px; 
+}
+
+.add-task-dialog form {
+    display: grid;
+    gap: 5px;
+}
+
+.add-task-dialog form > * {
+    display: grid;
+    gap: 2px;
+    padding: 2px;
+}
+
+.add-task-dialog .to-bold {
+    font-weight: bold;
+}
+
+.add-task-dialog textarea {
+    height: 20vh;
+    width: 30vh;
+    padding: var(--std-padding);
+    resize: none;
+}
+
+.add-task-dialog .dialog-buttons,
+.add-task-dialog .priority{
+    grid-auto-flow: column;
 }
 
 ::backdrop {

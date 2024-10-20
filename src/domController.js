@@ -4,10 +4,6 @@ import projectPageElements from "./projectPage"
 import addDialog from "./addDialogs";
 
 
-document.body.appendChild(addDialog.addTask);
-document.body.appendChild(addDialog.addProject);
-
-
 // these are executes immediately after the DOM has finished loading
 let body = document.querySelector('body');
 
@@ -16,3 +12,7 @@ commonElements.renderHeader(body);
 
 // render main page elements inside body
 mainPageElements.renderMain(body);
+
+// non-visible elements at the bottom
+document.body.appendChild(addDialog.addTask);
+document.body.appendChild(addDialog.addProject);
