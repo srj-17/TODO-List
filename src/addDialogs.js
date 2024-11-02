@@ -80,5 +80,13 @@ addTask.appendChild(addTaskForm);
 let addProject = document.createElement("dialog");
 addProject.classList.toggle("add-project-dialog");
 
+// //configure cancel button to cancel the add todo task
+let cancelAddTaskDialogButton = addTask.querySelector(".dialog-buttons #cancel")
+console.log(cancelAddTaskDialogButton)
+cancelAddTaskDialogButton.addEventListener("click", (event) => {
+    if (addTask && addTask.hasAttribute("open")) {
+        addTask.close()
+    }
+})
 
 export default { addTask, addProject };
