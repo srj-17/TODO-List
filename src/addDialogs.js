@@ -1,3 +1,5 @@
+import project from "./project.js";
+
 let addTaskForm = document.createElement("form");
 addTaskForm.setAttribute("action", "/index.html");
 addTaskForm.setAttribute("method", "get");
@@ -81,11 +83,26 @@ let addProject = document.createElement("dialog");
 addProject.classList.toggle("add-project-dialog");
 
 // //configure cancel button to cancel the add todo task
-let cancelAddTaskDialogButton = addTask.querySelector(".dialog-buttons #cancel")
-console.log(cancelAddTaskDialogButton)
-cancelAddTaskDialogButton.addEventListener("click", (event) => {
-    if (addTask && addTask.hasAttribute("open")) {
+let cancelTaskDialogButton = addTask.querySelector(".dialog-buttons #cancel")
+cancelTaskDialogButton.addEventListener("click", (event) => {
+    if (addTask.hasAttribute("open")) {
         addTask.close()
+    }
+})
+
+// configure the add button to add todo task
+let addTaskDialogButton = addTask.querySelector(".dialog-buttons #add")
+addTaskDialogButton.addEventListener("click", (event) => {
+    if (addTask.hasAttribute("open")) {
+        // addTodo(title, description, duedate, priority, notes, checklist) {
+            // TODO: add these attributes to the user.getTodayTodo().addTodo(...)
+        let title = addTask.querySelector("input#title").value
+        let description = addTask.querySelector("textarea#description").value
+        let dueDate = addTask.querySelector("input#duedate").value
+        let notes = addTask.querySelector("input#notes").value
+        let checklist = null
+        
+        project.addTodo()
     }
 })
 
