@@ -2,25 +2,32 @@ let addTaskForm = document.createElement("form");
 addTaskForm.setAttribute("action", "/index.html");
 addTaskForm.setAttribute("method", "get");
 
-// TODO: remove this. this is just for first demo, 
-    // also, add the checklists and priority dynamically later on
-addTaskForm.innerHTML = `
+let addTaskFormElements = [
+    `
     <div>
-    <label class="to-bold" for="title">Title</label>
-    <input type="text" id="title" placeholder="Title">
+        <label class="to-bold" for="title">Title</label>
+        <input type="text" id="title" placeholder="Title">
     </div>
+    `,
+    `
     <div>
-    <label class="to-bold" for="duedate">Due-Date</label>
-    <input type="date" id="duedate" placeholder=${new Date()}>
+        <label class="to-bold" for="duedate">Due-Date</label>
+        <input type="date" id="duedate" placeholder=${new Date()}>
     </div>
+    `,
+    `
     <div>
-    <label class="to-bold" for="notes">Notes</label>
-    <input type="text" id="notes" placeholder="notes">
+        <label class="to-bold" for="notes">Notes</label>
+        <input type="text" id="notes" placeholder="notes">
     </div>
+    `,
+    `
     <div>
-    <label class="to-bold" for="description">Description</label>
-    <textarea id="description" placeholder="Todo description"></textarea>
+        <label class="to-bold" for="description">Description</label>
+        <textarea id="description" placeholder="Todo description"></textarea>
     </div>
+    `,
+    `
     <fieldset>
         <legend class="to-bold">Checklist</legend>
         <div>
@@ -32,6 +39,8 @@ addTaskForm.innerHTML = `
             <input type="checkbox" id="checklist" name="checklist">
         </div>
     </fieldset>
+    `,
+    `
     <fieldset class="priority">
         <legend class="to-bold">Priority</legend>
         <div>
@@ -47,11 +56,22 @@ addTaskForm.innerHTML = `
             <label for="low">Low</label>
         </div>
     </fieldset>
+    `,
+    `
     <div class="dialog-buttons">
         <button type="submit" id="add">Add Todo</button>
         <button type="button" id="cancel">Cancel</button>
     </div>
-    `
+    `,
+]
+
+// TODO: remove this. this is just for first demo, 
+    // also, add the checklists and priority dynamically later on
+let addTaskFormHTML = ``
+addTaskFormElements.forEach(element => {
+    addTaskFormHTML = addTaskFormHTML + element
+});
+addTaskForm.innerHTML = addTaskFormHTML
 
 let addTask = document.createElement("dialog");
 addTask.classList.toggle("add-task-dialog");
