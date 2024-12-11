@@ -1,4 +1,5 @@
 import project from "./project.js";
+import user from "./user.js";
 
 let addTaskForm = document.createElement("form");
 addTaskForm.setAttribute("action", "/index.html");
@@ -34,11 +35,11 @@ let addTaskFormElements = [
         <legend class="to-bold">Checklist</legend>
         <div>
             <label for="example">Example</label>
-            <input type="checkbox" id="checklist" name="checklist">
+            <input type="checkbox" id="example" name="checklist">
         </div>
         <div>
-            <label for="checklist">Sub-todos</label>
-            <input type="checkbox" id="checklist" name="checklist">
+            <label for="different_example">Example</label>
+            <input type="checkbox" id="different_example" name="checklist">
         </div>
     </fieldset>
     `,
@@ -71,7 +72,7 @@ let addTaskFormElements = [
     // also, add the checklists and priority dynamically later on
 let addTaskFormHTML = ``
 addTaskFormElements.forEach(element => {
-    addTaskFormHTML = addTaskFormHTML + element
+    addTaskFormHTML = addTaskFormHTML + element;
 });
 addTaskForm.innerHTML = addTaskFormHTML
 
@@ -96,14 +97,16 @@ addTaskDialogButton.addEventListener("click", (event) => {
     if (addTask.hasAttribute("open")) {
         // addTodo(title, description, duedate, priority, notes, checklist) {
             // TODO: add these attributes to the user.getTodayTodo().addTodo(...)
-        let title = addTask.querySelector("input#title").value
-        let description = addTask.querySelector("textarea#description").value
-        let dueDate = addTask.querySelector("input#duedate").value
-        let notes = addTask.querySelector("input#notes").value
-        let checklist = null
-        
-        project.addTodo()
-    }
-})
+            let title = addTask.querySelector("input#title").value
+            let description = addTask.querySelector("textarea#description").value
+            let dueDate = addTask.querySelector("input#duedate").value
+            let priority = addTask.querySelector("[name='priority']")
+            let notes = addTask.querySelector("input#notes").value
+            let checklist = addTask.querySelector("[name='checklist']")
+
+            user.getTodayTodos().addTodo(title, description, dueDate, priority, notes, checklist)
+            // project.addTodo(title, description, dueDate, notes)
+        }
+    });
 
 export default { addTask, addProject };
