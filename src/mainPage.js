@@ -1,4 +1,4 @@
-import tasks from "./user";
+import user from "./user"
 import addDialog from "./addDialogs";
 
 let main = document.createElement("div");
@@ -18,57 +18,38 @@ todayTasksContainer.innerHTML = todayTasksHeader;
 // TODO: adding today's tasks dynamically
 let todayTasks = document.createElement("ul");
 todayTasks.classList.toggle("today-tasks");
-
-// TODO: REMOVE this innnerHTML: just for example
-todayTasks.innerHTML = `
-    <li class="task">
-    <div class="task-title">some task</div>
-    <div class="task-desc">Description of the task ...</div>
-    <div class="task-duedate">2072-10-20</div>
-    <div class="task-completion-status">
-    <input type="checkbox" name="completed">
-    </div>
-    <div class="project-dropdown-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-    </div>
-    </li>
-    <li class="task">
-    <div class="task-title">some task</div>
-    <div class="task-desc">Description of the task ...</div>
-    <div class="task-duedate">2072-10-20</div>
-    <div class="task-completion-status">
-    <input type="checkbox" name="completed">
-    </div>
-    <div class="project-dropdown-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-    </div>
-    </li>
-    <li class="task">
-    <div class="task-title">some task</div>
-    <div class="task-desc">Description of the task ...</div>
-    <div class="task-duedate">2072-10-20</div>
-    <div class="task-completion-status">
-    <input type="checkbox" name="completed">
-    </div>
-    <div class="project-dropdown-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-    </div>
-    </li>
-    <li class="task">
-    <div class="task-title">some task</div>
-    <div class="task-desc">Description of the task ...</div>
-    <div class="task-duedate">2072-10-20</div>
-    <div class="task-completion-status">
-    <input type="checkbox" name="completed">
-    </div>
-    <div class="project-dropdown-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-    </div>
-    </li>
-    `
 todayTasksContainer.appendChild(todayTasks);
 
-// add a add task button 
+// storing today's tasks
+// decided to not show priority. 
+    // That is implied by the ordering of todos
+function renderTasks() {
+    let todayTodoList = user.getTodayTodos().getTodos();
+
+    // empty the today's tasks and fill it back again
+    todayTasks.innerHTML = ``
+
+    let todayTasksHTML = ``
+    todayTodoList.forEach(todo => {
+        let todoItem = `
+            <li class="task" id="${user.getTodayTodos().id}-${todo.id}">
+                <div class="todo-title">${todo.title}</div>
+                <div class="todo-desc">${todo.description}</div>
+                <div class="todo-duedate">${todo.duedate}</div>
+                <div class="todo-completion-status">
+                    <input type="checkbox" id="${todo.status}" name="completed">
+                </div>
+                <!-- might remove this, complex, or use it for checklist instead -->
+                <div class="project-dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
+                </div>
+            </li>
+            `
+        todayTasksHTML = todayTasksHTML + todoItem;
+    });
+    todayTasks.innerHTML = todayTasksHTML;
+}
+
 let addTaskButtonContainer = document.createElement("div");
 addTaskButtonContainer.classList.toggle("add-task-btn");
 
@@ -132,6 +113,10 @@ function renderMain() {
 
     // tasks
     body.appendChild(main);
+
+    // non-visible elements at the bottom
+    document.body.appendChild(addDialog.addTask);
+    document.body.appendChild(addDialog.addProject);
 };
 
-export default { renderMain };
+export default { renderMain, renderTasks };

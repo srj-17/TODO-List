@@ -1,9 +1,10 @@
 import project from './project';
-import todo from './todo';
 
+// we're assuming a single user todo app
 const user = (function () {
     let projects = [];
-    let todayTodos = new project("todayTodo", 1, new Date());
+    // todayTodos will always have id 999
+    let todayTodos = new project(999, "todayTodo", 1, new Date());
     
     // if todos added at random (outside of projects), they're added to today todos
     // create a new todayTodo with a new date, transfer all of yesterday's todos
@@ -19,12 +20,12 @@ const user = (function () {
         } 
     }
 
-    let addTodayTodos = (title, description, duedate, priority, notes, checklist) => {
-        return todayTodos.addTodo(title, description, duedate, priority, notes, checklist)
+    let addTodayTodos = (title, description, duedate, priority, notes) => {
+        return todayTodos.addTodo(title, description, duedate, priority, notes)
     }
 
-    let editTodayTodos = (id, title, description, duedate, priority, notes, checklist) => {
-        return todayTodos.addTodo(id, title, description, duedate, priority, notes, checklist)
+    let editTodayTodos = (id, title, description, duedate, priority, notes) => {
+        return todayTodos.addTodo(id, title, description, duedate, priority, notes)
     }
 
     let getTodayTodos = () => todayTodos;
@@ -32,7 +33,10 @@ const user = (function () {
     let deleteTodayTodos = (id) => todayTodos.deleteTodo(id);
 
     function addProject(name, priority, duedate) {
-        let newProject = new project(name, priority, duedate);
+        let temp = this.projects.at(-1);
+        let id = this.projects.indexOf(temp) + 1;
+        
+        let newProject = new project(id, name, priority, duedate);
         projects.push(newProject);
     };
 

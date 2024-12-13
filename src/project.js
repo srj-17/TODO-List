@@ -1,7 +1,9 @@
 import todo from './todo';
+//import domController from './domController.js';
 
 class Project {
-    constructor(name, priority, dueDate) {
+    constructor(id, name, priority, dueDate) {
+        this.id = id;
         this.name = name;
 
         // project priority is just for sorting, don't want any complications here, with todos also having priroty
@@ -12,18 +14,29 @@ class Project {
     }
     
     // we're trusting valid todo to be provided. should we? YES Because we're creating a form in html # TODO
-    addTodo(title, description, duedate, priority, notes, checklist) {
-        const newTodo = new todo(title, description, duedate, priority, notes, checklist);
+    addTodo(title, description, duedate, priority, notes) {
+        // get the index of where new todo will go in the todo list, 
+            // and that will be the id 
+        // i.e. id = index of next todo  
+        // but you'll need to a unique id for all todos in all projects, 
+        // so you need to associate project id as well, I think
+        // i.e. id = project id + index of next todo in project todo list
+        let temp = this.todoList.at(-1);
+        temp = this.todoList.indexOf(temp) + 1;
+        let id = temp;
+
+        const newTodo = new todo(id, title, description, duedate, priority, notes);
         this.todoList.push(newTodo);
     }
 
     // get everything and only edit those that changed
     // TODO: search for the best way to edit and implement it here, use todo's edit or this type
     // this type is non-extendible cause you have to modify it 
-    editTodo(id, title, description, duedate, priority, notes, checklist) {
+    editTodo(id, title, description, duedate, priority, notes) {
         let index = id;
         let todoToEdit = this.todoList.at(index);
-        todoToEdit.edit(title, description, duedate, priority, notes, checklist);
+        todoToEdit.edit(title, description, duedate, priority, notes);
+        //domController.render()
     }
 
     getTodos() {
@@ -35,11 +48,13 @@ class Project {
     deleteTodo(id) {
         let index = id;
         this.todoList.splice(index, 1);
+        //domController.render();
     }
 
     // for the 'daily tasks' project
     changeDuedate(date) {
         this.todoList.dueDate = date;
+        //domController.render();
     }
 }
 

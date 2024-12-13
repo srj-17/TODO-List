@@ -1,5 +1,5 @@
-import project from "./project.js";
 import user from "./user.js";
+import mainPage from "./mainPage.js";
 
 let addTaskForm = document.createElement("form");
 addTaskForm.setAttribute("action", "/index.html");
@@ -31,19 +31,6 @@ let addTaskFormElements = [
     </div>
     `,
     `
-    <fieldset>
-        <legend class="to-bold">Checklist</legend>
-        <div>
-            <label for="example">Example</label>
-            <input type="checkbox" id="example" name="checklist">
-        </div>
-        <div>
-            <label for="different_example">Example</label>
-            <input type="checkbox" id="different_example" name="checklist">
-        </div>
-    </fieldset>
-    `,
-    `
     <fieldset class="priority">
         <legend class="to-bold">Priority</legend>
         <div>
@@ -68,45 +55,56 @@ let addTaskFormElements = [
     `,
 ]
 
-// TODO: remove this. this is just for first demo, 
-    // also, add the checklists and priority dynamically later on
 let addTaskFormHTML = ``
 addTaskFormElements.forEach(element => {
     addTaskFormHTML = addTaskFormHTML + element;
 });
 addTaskForm.innerHTML = addTaskFormHTML
 
-let addTask = document.createElement("dialog");
-addTask.classList.toggle("add-task-dialog");
-addTask.appendChild(addTaskForm);
+let addTaskDialog = document.createElement("dialog");
+addTaskDialog.classList.toggle("add-task-dialog");
+addTaskDialog.appendChild(addTaskForm);
 
 let addProject = document.createElement("dialog");
 addProject.classList.toggle("add-project-dialog");
 
 // //configure cancel button to cancel the add todo task
-let cancelTaskDialogButton = addTask.querySelector(".dialog-buttons #cancel")
+let cancelTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #cancel")
 cancelTaskDialogButton.addEventListener("click", (event) => {
-    if (addTask.hasAttribute("open")) {
-        addTask.close()
+    if (addTaskDialog.hasAttribute("open")) {
+        addTaskDialog.close()
     }
 })
 
-// configure the add button to add todo task
-let addTaskDialogButton = addTask.querySelector(".dialog-buttons #add")
-addTaskDialogButton.addEventListener("click", (event) => {
-    if (addTask.hasAttribute("open")) {
-        // addTodo(title, description, duedate, priority, notes, checklist) {
-            // TODO: add these attributes to the user.getTodayTodo().addTodo(...)
-            let title = addTask.querySelector("input#title").value
-            let description = addTask.querySelector("textarea#description").value
-            let dueDate = addTask.querySelector("input#duedate").value
-            let priority = addTask.querySelector("[name='priority']")
-            let notes = addTask.querySelector("input#notes").value
-            let checklist = addTask.querySelector("[name='checklist']")
-
-            user.getTodayTodos().addTodo(title, description, dueDate, priority, notes, checklist)
-            // project.addTodo(title, description, dueDate, notes)
-        }
+function clearForm() {
+    let toClear = Array.from(addTaskForm.querySelectorAll("input"));
+    toClear.forEach(inputField => {
+        inputField.value = ""
     });
+    console.log(toClear)
+}
 
-export default { addTask, addProject };
+// configure the add button to add todo task
+let addTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #add")
+addTaskDialogButton.addEventListener("click", (event) => {
+    if (addTaskDialog.hasAttribute("open")) {
+        // TODO: add these attributes to the user.getTodayTodo().addTodo(...)
+        let title = addTaskDialog.querySelector("input#title").value
+        let description = addTaskDialog.querySelector("textarea#description").value
+        let dueDate = addTaskDialog.querySelector("input#duedate").value
+        let priority = addTaskDialog.querySelector("[name='priority']")
+        let notes = addTaskDialog.querySelector("input#notes").value
+        user.getTodayTodos().addTodo(title, description, dueDate, priority, notes)
+
+        // prevent the form from submitting, and instead just add the todos to the today's todo
+        event.preventDefault();
+        if (addTaskDialog.hasAttribute("open")) {
+            clearForm();
+            addTaskDialog.close()
+        }
+
+        mainPage.renderTasks();
+    }
+});
+
+export default { addTask: addTaskDialog, addProject };
