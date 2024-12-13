@@ -10,11 +10,12 @@ class Todo {
         this.id = id;
 
         // todo should be created even if title is not given, project should check for title
-        this.title = title;
+        this.title = title || `${id}`;
         this.description = description;
 
         // have to check if valid duedate
-        this.duedate = duedate ? duedate : new Date(duedate);
+        // if it is not, set today's date
+        this.duedate = duedate ? new Date(duedate) : new Date();
 
         this.priority = +priority | 3;
         this.notes = notes;

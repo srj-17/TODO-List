@@ -32,23 +32,48 @@ function renderTasks() {
     let todayTasksHTML = ``
     todayTodoList.forEach(todo => {
         let todoItem = `
-            <li class="task" id="${user.getTodayTodos().id}-${todo.id}">
+            <li class="todo" id="${user.getTodayTodos().id}-${todo.id}">
                 <div class="todo-title">${todo.title}</div>
                 <div class="todo-desc">${todo.description}</div>
-                <div class="todo-duedate">${todo.duedate}</div>
+                <div class="todo-duedate">${todo.duedate.toDateString()}</div>
                 <div class="todo-completion-status">
-                    <input type="checkbox" id="${todo.status}" name="completed">
+                    <label for="complete"> Completed </label>
+                    <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
                 </div>
                 <!-- might remove this, complex, or use it for checklist instead -->
-                <div class="project-dropdown-btn">
+                <!--<div class="project-dropdown-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-                </div>
+                </div>-->
             </li>
             `
         todayTasksHTML = todayTasksHTML + todoItem;
     });
     todayTasks.innerHTML = todayTasksHTML;
 }
+
+// for checkbox
+todayTasks.addEventListener("click", (event) => {
+    if (event.target.id === "complete") {
+        let targetTodo = event.target.closest(".todo");
+        let temp = targetTodo.id.split("-");
+        let targetTodoId = temp[1];
+        let targetTodoObject;
+
+        // if I decide to later on use todayTodos as project
+        //let targetProjectId = temp[0];
+        //if (+targetProjectId === 999) {
+        //    targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
+        //} else {
+        //    //for future reference: for other projects than todayTodos
+        //    targetTodoObject = user.at(targetProjectId).getTodos().at(targetTodoId)                
+
+        targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
+        targetTodoObject.status = (targetTodoObject.status) ? false : true;
+        console.log(targetTodoObject.status)
+        console.log(document.querySelector("#complete"))
+        renderTasks();
+    }
+})
 
 let addTaskButtonContainer = document.createElement("div");
 addTaskButtonContainer.classList.toggle("add-task-btn");
