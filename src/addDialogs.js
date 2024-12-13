@@ -1,6 +1,7 @@
 import user from "./user.js";
 import mainPage from "./mainPage.js";
 
+// ----- task form dialog -------- //
 let addTaskForm = document.createElement("form");
 addTaskForm.setAttribute("action", "/index.html");
 addTaskForm.setAttribute("method", "get");
@@ -53,24 +54,17 @@ let addTaskFormElements = [
         <button type="button" id="cancel">Cancel</button>
     </div>
     `,
-]
+];
 
 let addTaskFormHTML = ``
 addTaskFormElements.forEach(element => {
     addTaskFormHTML = addTaskFormHTML + element;
 });
-addTaskForm.innerHTML = addTaskFormHTML
+addTaskForm.innerHTML = addTaskFormHTML;
 
-let addTaskDialog = document.createElement("dialog");
-addTaskDialog.classList.toggle("add-task-dialog");
-addTaskDialog.appendChild(addTaskForm);
-
-let addProject = document.createElement("dialog");
-addProject.classList.toggle("add-project-dialog");
-
-// //configure cancel button to cancel the add todo task
+//configure cancel button to cancel the add todo task
 let cancelTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #cancel")
-cancelTaskDialogButton.addEventListener("click", (event) => {
+cancelTaskDialogButton.addEventListener("click", () => {
     if (addTaskDialog.hasAttribute("open")) {
         addTaskDialog.close()
     }
@@ -106,5 +100,72 @@ addTaskDialogButton.addEventListener("click", (event) => {
         mainPage.renderTasks();
     }
 });
+
+// ------- project form dialog ------- //
+let addProjectFormElements = [
+    `
+    <div>
+        <label class="to-bold" for="title">Title</label>
+        <input type="text" id="title" placeholder="Project Title">
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="duedate">Due-Date</label>
+        <input type="date" id="duedate" placeholder=${new Date()}>
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="notes">Notes</label>
+        <input type="text" id="notes" placeholder="notes">
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="description">Description</label>
+        <textarea id="description" placeholder="Todo description"></textarea>
+    </div>
+    `,
+    `
+    <fieldset class="priority">
+        <legend class="to-bold">Priority</legend>
+        <div>
+            <input type="radio" id="high" name="priority" value="1">
+            <label for="high">High</label>
+        </div>
+        <div>
+            <input type="radio" id="medium" name="priority" value="2">
+            <label for="medium">Medium</label>
+        </div>
+        <div>
+            <input type="radio" id="low" name="priority" value="3">
+            <label for="low">Low</label>
+        </div>
+    </fieldset>
+    `,
+    `
+    <div class="dialog-buttons">
+        <button type="submit" id="add">Add Todo</button>
+        <button type="button" id="cancel">Cancel</button>
+    </div>
+    `,
+];
+
+
+let addProjectFormHTML = ``
+addProjectFormElements.foreach(element => {
+    addProjectFormHTML = addProjectFormHTML + element;
+});
+addProjectFormHTML.innerHTML = addTaskFormHTML;
+
+let addTaskDialog = document.createElement("dialog");
+addTaskDialog.classList.toggle("add-task-dialog");
+addTaskDialog.appendChild(addTaskForm);
+
+let addProject = document.createElement("dialog");
+addProject.classList.toggle("add-project-dialog");
+addProjectDialog.appendChild(addProjectForm);
+
 
 export default { addTask: addTaskDialog, addProject };

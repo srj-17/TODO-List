@@ -2,14 +2,13 @@ import todo from './todo';
 //import domController from './domController.js';
 
 class Project {
-    constructor(id, name, priority, dueDate) {
+    constructor(id, name, priority) {
         this.id = id;
         this.name = name;
 
         // project priority is just for sorting, don't want any complications here, with todos also having priroty
         // priority starts with 0
         this.priority = priority;
-        this.dueDate = dueDate ? new Date(dueDate) : new Date();
         this.todoList = [];
     }
     
@@ -48,12 +47,6 @@ class Project {
     deleteTodo(id) {
         let index = id;
         this.todoList.splice(index, 1);
-        //domController.render();
-    }
-
-    // for the 'daily tasks' project
-    changeDuedate(date) {
-        this.todoList.dueDate = date;
         //domController.render();
     }
 }

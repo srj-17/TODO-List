@@ -4,22 +4,8 @@ import project from './project';
 const user = (function () {
     let projects = [];
     // todayTodos will always have id 999
-    let todayTodos = new project(999, "todayTodo", 1, new Date());
+    let todayTodos = new project(999, "todayTodo", 1);
     
-    // if todos added at random (outside of projects), they're added to today todos
-    // create a new todayTodo with a new date, transfer all of yesterday's todos
-    // to today's todayTodo 
-    // Do this each time DOM is loaded, or each time user log ins 
-    // [we don't have login system yet], so we do the first method
-    function updateTodayTodos() {
-        if (!(todayTodos.dueDate === new Date())) {
-            todayTodos.changeDueDate(new Date());
-
-            // so that you don't have more than 20 items in your daily array
-            todayTodos.todoList = todayTodos.todoList.slice(0, 20);
-        } 
-    }
-
     let addTodayTodos = (title, description, duedate, priority, notes) => {
         return todayTodos.addTodo(title, description, duedate, priority, notes)
     }
@@ -32,11 +18,11 @@ const user = (function () {
 
     let deleteTodayTodos = (id) => todayTodos.deleteTodo(id);
 
-    function addProject(name, priority, duedate) {
+    function addProject(name, priority) {
         let temp = this.projects.at(-1);
         let id = this.projects.indexOf(temp) + 1;
         
-        let newProject = new project(id, name, priority, duedate);
+        let newProject = new project(id, name, priority);
         projects.push(newProject);
     };
 
