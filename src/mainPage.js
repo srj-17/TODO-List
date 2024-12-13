@@ -121,11 +121,11 @@ main.appendChild(seeAllProjectsButtonContainer);
 
 // after adding all these, we have buttons
 addTaskButton.addEventListener("click", () => {
-    addDialog.addTask.showModal();
+    addDialog.addTaskDialog.showModal();
 });
 
 addProjectButton.addEventListener('click', () => {
-    console.log("hello, project")
+    addDialog.addProjectDialog.showModal();
 });
 
 seeAllProjectsButton.addEventListener('click', () => {
@@ -140,8 +140,8 @@ function renderMain() {
     body.appendChild(main);
 
     // non-visible elements at the bottom
-    document.body.appendChild(addDialog.addTask);
-    document.body.appendChild(addDialog.addProject);
+    document.body.appendChild(addDialog.addTaskDialog);
+    document.body.appendChild(addDialog.addProjectDialog);
 };
 
 export default { renderMain, renderTasks };

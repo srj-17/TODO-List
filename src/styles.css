@@ -115,7 +115,7 @@ body {
 
  }
 
-.add-task-dialog {
+dialog {
     margin: auto;
     /*width: 10%;*/
     /*height: 10%;*/

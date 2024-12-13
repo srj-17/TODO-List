@@ -62,6 +62,11 @@ addTaskFormElements.forEach(element => {
 });
 addTaskForm.innerHTML = addTaskFormHTML;
 
+let addTaskDialog = document.createElement("dialog");
+addTaskDialog.classList.toggle("add-task-dialog");
+addTaskDialog.classList.toggle("dialog");
+addTaskDialog.appendChild(addTaskForm);
+
 //configure cancel button to cancel the add todo task
 let cancelTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #cancel")
 cancelTaskDialogButton.addEventListener("click", () => {
@@ -70,8 +75,8 @@ cancelTaskDialogButton.addEventListener("click", () => {
     }
 })
 
-function clearForm() {
-    let toClear = Array.from(addTaskForm.querySelectorAll("input"));
+function clearForm(form) {
+    let toClear = Array.from(form.querySelectorAll("input"));
     toClear.forEach(inputField => {
         inputField.value = ""
     });
@@ -93,7 +98,7 @@ addTaskDialogButton.addEventListener("click", (event) => {
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
         if (addTaskDialog.hasAttribute("open")) {
-            clearForm();
+            clearForm(addTaskForm);
             addTaskDialog.close()
         }
 
@@ -102,70 +107,58 @@ addTaskDialogButton.addEventListener("click", (event) => {
 });
 
 // ------- project form dialog ------- //
+let addProjectForm = document.createElement("form");
+addProjectForm.setAttribute("action", "/index.html");
+addProjectForm.setAttribute("method", "get");
+
 let addProjectFormElements = [
     `
     <div>
-        <label class="to-bold" for="title">Title</label>
-        <input type="text" id="title" placeholder="Project Title">
+        <label class="to-bold" for="name">Name</label>
+        <input type="text" id="name" placeholder="Project Name">
     </div>
-    `,
-    `
-    <div>
-        <label class="to-bold" for="duedate">Due-Date</label>
-        <input type="date" id="duedate" placeholder=${new Date()}>
-    </div>
-    `,
-    `
-    <div>
-        <label class="to-bold" for="notes">Notes</label>
-        <input type="text" id="notes" placeholder="notes">
-    </div>
-    `,
-    `
-    <div>
-        <label class="to-bold" for="description">Description</label>
-        <textarea id="description" placeholder="Todo description"></textarea>
-    </div>
-    `,
-    `
-    <fieldset class="priority">
-        <legend class="to-bold">Priority</legend>
-        <div>
-            <input type="radio" id="high" name="priority" value="1">
-            <label for="high">High</label>
-        </div>
-        <div>
-            <input type="radio" id="medium" name="priority" value="2">
-            <label for="medium">Medium</label>
-        </div>
-        <div>
-            <input type="radio" id="low" name="priority" value="3">
-            <label for="low">Low</label>
-        </div>
-    </fieldset>
     `,
     `
     <div class="dialog-buttons">
-        <button type="submit" id="add">Add Todo</button>
+        <button type="submit" id="add">Add Project</button>
         <button type="button" id="cancel">Cancel</button>
     </div>
     `,
 ];
 
-
 let addProjectFormHTML = ``
-addProjectFormElements.foreach(element => {
+addProjectFormElements.forEach(element => {
     addProjectFormHTML = addProjectFormHTML + element;
 });
-addProjectFormHTML.innerHTML = addTaskFormHTML;
+addProjectForm.innerHTML = addProjectFormHTML;
 
-let addTaskDialog = document.createElement("dialog");
-addTaskDialog.classList.toggle("add-task-dialog");
-addTaskDialog.appendChild(addTaskForm);
-
-let addProject = document.createElement("dialog");
-addProject.classList.toggle("add-project-dialog");
+let addProjectDialog = document.createElement("dialog");
+addProjectDialog.classList.toggle("add-project-dialog");
+addProjectDialog.classList.toggle("dialog");
 addProjectDialog.appendChild(addProjectForm);
 
+//configure cancel button to cancel the add todo task
+let cancelProjectDialogButton = addProjectDialog.querySelector(".dialog-buttons #cancel")
+cancelProjectDialogButton.addEventListener("click", () => {
+    if (addProjectDialog.hasAttribute("open")) {
+        clearForm(addProjectForm);
+        addProjectDialog.close()
+    }
+});
 
-export default { addTask: addTaskDialog, addProject };
+let addProjectDialogButton = addProjectDialog.querySelector(".dialog-buttons #add")
+addProjectDialogButton.addEventListener("click", (event) => {
+    if (addProjectDialog.hasAttribute("open")) {
+        let projectName = addProjectDialog.querySelector("#name").value;
+        user.addProject(projectName);
+
+        // prevent the form from submitting, and instead just add the todos to the today's todo
+        event.preventDefault();
+        if (addProjectDialog.hasAttribute("open")) {
+            clearForm(addProjectForm);
+            addProjectDialog.close();
+        }
+    }
+});
+
+export default { addTaskDialog, addProjectDialog };

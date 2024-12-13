@@ -4,7 +4,7 @@ import project from './project';
 const user = (function () {
     let projects = [];
     // todayTodos will always have id 999
-    let todayTodos = new project(999, "todayTodo", 1);
+    let todayTodos = new project(999, "todayTodo");
     
     let addTodayTodos = (title, description, duedate, priority, notes) => {
         return todayTodos.addTodo(title, description, duedate, priority, notes)
@@ -18,11 +18,10 @@ const user = (function () {
 
     let deleteTodayTodos = (id) => todayTodos.deleteTodo(id);
 
-    function addProject(name, priority) {
-        let temp = this.projects.at(-1);
-        let id = this.projects.indexOf(temp) + 1;
+    function addProject(name) {
+        let id = projects.length;
         
-        let newProject = new project(id, name, priority);
+        let newProject = new project(id, name);
         projects.push(newProject);
     };
 

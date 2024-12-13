@@ -2,27 +2,17 @@ import todo from './todo';
 //import domController from './domController.js';
 
 class Project {
-    constructor(id, name, priority) {
+    constructor(id, name) {
         this.id = id;
         this.name = name;
 
-        // project priority is just for sorting, don't want any complications here, with todos also having priroty
-        // priority starts with 0
-        this.priority = priority;
         this.todoList = [];
     }
     
     // we're trusting valid todo to be provided. should we? YES Because we're creating a form in html # TODO
     addTodo(title, description, duedate, priority, notes) {
-        // get the index of where new todo will go in the todo list, 
-            // and that will be the id 
-        // i.e. id = index of next todo  
-        // but you'll need to a unique id for all todos in all projects, 
-        // so you need to associate project id as well, I think
-        // i.e. id = project id + index of next todo in project todo list
-        let temp = this.todoList.at(-1);
-        temp = this.todoList.indexOf(temp) + 1;
-        let id = temp;
+        // get the index of where the next todo will goto
+        let id = this.todoList.length;
 
         const newTodo = new todo(id, title, description, duedate, priority, notes);
         this.todoList.push(newTodo);
