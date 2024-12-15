@@ -111,9 +111,14 @@ body {
 
      }
 
- .projects-page {
-
- }
+.projects {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    .projects-header {
+        font-size: 1.5rem;
+    }
+}
 
 dialog {
     margin: auto;

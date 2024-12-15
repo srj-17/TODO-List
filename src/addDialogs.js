@@ -1,5 +1,6 @@
 import user from "./user.js";
 import mainPage from "./mainPage.js";
+import projectPage from "./projectPage.js"
 
 // ----- task form dialog -------- //
 let addTaskForm = document.createElement("form");
@@ -67,6 +68,12 @@ addTaskDialog.classList.toggle("add-task-dialog");
 addTaskDialog.classList.toggle("dialog");
 addTaskDialog.appendChild(addTaskForm);
 
+// change the task dialog for the given project
+// Question: does it change the dialog in dom as well? Do we need to render Again?
+function changeTaskDialogFor(id) {
+    addTaskDialog.id = id;
+}
+
 //configure cancel button to cancel the add todo task
 let cancelTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #cancel")
 cancelTaskDialogButton.addEventListener("click", () => {
@@ -80,7 +87,6 @@ function clearForm(form) {
     toClear.forEach(inputField => {
         inputField.value = ""
     });
-    console.log(toClear)
 }
 
 // configure the add button to add todo task
@@ -93,7 +99,21 @@ addTaskDialogButton.addEventListener("click", (event) => {
         let dueDate = addTaskDialog.querySelector("input#duedate").value
         let priority = addTaskDialog.querySelector("[name='priority']")
         let notes = addTaskDialog.querySelector("input#notes").value
-        user.getTodayTodos().addTodo(title, description, dueDate, priority, notes)
+
+        // TODO: getting id and adding todo according to that id
+        let projectId = addTaskDialog.id;
+
+        if (projectId === "999") {
+            user.getTodayTodos().addTodo(title, description, dueDate, priority, notes);
+            mainPage.renderTasks();
+        } else {
+            user.getProject(projectId).addTodo(title, description, dueDate, priority, notes)
+
+            // render the projects of id _ under the projects div
+            let projects = document.querySelector(".projects");
+            projectPage.renderProjectTasks(projectId, projects);
+            //console.log(user.getProject(parentDialogId).getTodos())
+        }
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
@@ -101,8 +121,6 @@ addTaskDialogButton.addEventListener("click", (event) => {
             clearForm(addTaskForm);
             addTaskDialog.close()
         }
-
-        mainPage.renderTasks();
     }
 });
 
@@ -161,4 +179,4 @@ addProjectDialogButton.addEventListener("click", (event) => {
     }
 });
 
-export default { addTaskDialog, addProjectDialog };
+export default { addTaskDialog, changeTaskDialogFor, addProjectDialog };

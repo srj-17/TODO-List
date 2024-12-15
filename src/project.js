@@ -39,6 +39,14 @@ class Project {
         this.todoList.splice(index, 1);
         //domController.render();
     }
+
+    getId() {
+        return this.id;
+    }
+
+    getName() {
+        return this.name;
+    }
 }
 
 export default Project;

@@ -1,5 +1,7 @@
 import user from "./user"
 import addDialog from "./addDialogs";
+import domController from "./domController";
+import addDialogs from "./addDialogs";
 
 let main = document.createElement("div");
 main.classList.toggle("main");
@@ -23,6 +25,8 @@ todayTasksContainer.appendChild(todayTasks);
 // storing today's tasks
 // decided to not show priority. 
     // That is implied by the ordering of todos
+// TODO: maybe I can use the renderProjectTasks() from projectPage 
+// for this purpose
 function renderTasks() {
     let todayTodoList = user.getTodayTodos().getTodos();
 
@@ -51,6 +55,59 @@ function renderTasks() {
     todayTasks.innerHTML = todayTasksHTML;
 }
 
+let addTaskButtonContainer = document.createElement("div");
+addTaskButtonContainer.classList.toggle("add-task-btn");
+
+let addTaskButton = document.createElement("button");
+addTaskButton.textContent = "Add Task";
+addTaskButtonContainer.appendChild(addTaskButton);
+
+// append the task button
+todayTasksContainer.appendChild(addTaskButtonContainer);
+
+// TODO: add clickable dropdown to highest-priority-projects-container 
+// to show some of its tasks  
+let projectsContainer= document.createElement("div");
+projectsContainer.classList.toggle("highest-priority-projects-container");
+
+// add the add New Project button
+let addProjectButton = document.createElement("button");
+addProjectButton.textContent = "Add New Project";
+
+let addProjectButtonContainer = document.createElement("div");
+addProjectButtonContainer.classList.toggle("add-project-btn");
+addProjectButtonContainer.appendChild(addProjectButton);
+
+// add see all projects button
+let seeAllProjectsButtonContainer = document.createElement("div");
+seeAllProjectsButtonContainer.classList.toggle("see-all-projects-btn");
+
+let seeAllProjectsButton = document.createElement("button");
+seeAllProjectsButton.innerHTML = `
+    <div class="text">See All Projects</div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg>
+`;
+seeAllProjectsButtonContainer.appendChild(seeAllProjectsButton);
+
+
+main.appendChild(todayTasksContainer);
+main.appendChild(projectsContainer);
+main.appendChild(addProjectButtonContainer);
+main.appendChild(seeAllProjectsButtonContainer);
+
+// after adding all these, we have buttons
+addTaskButton.addEventListener("click", () => {
+    addDialog.addTaskDialog.showModal();
+});
+
+addProjectButton.addEventListener('click', () => {
+    addDialog.addProjectDialog.showModal();
+});
+
+seeAllProjectsButton.addEventListener('click', () => {
+    domController.renderProjects();
+});
+
 // for checkbox
 todayTasks.addEventListener("click", (event) => {
     if (event.target.id === "complete") {
@@ -75,73 +132,28 @@ todayTasks.addEventListener("click", (event) => {
     }
 })
 
-let addTaskButtonContainer = document.createElement("div");
-addTaskButtonContainer.classList.toggle("add-task-btn");
-
-let addTaskButton = document.createElement("button");
-addTaskButton.textContent = "Add Task";
-addTaskButtonContainer.appendChild(addTaskButton);
-
-// append the task button
-todayTasksContainer.appendChild(addTaskButtonContainer);
-
-
-// TODO: add clickable dropdown to highest-priority-projects-container 
-// to show some of its tasks  
-let projectsContainer= document.createElement("div");
-projectsContainer.classList.toggle("highest-priority-projects-container");
-
-
-// add the add New Project button
-let addProjectButton = document.createElement("button");
-addProjectButton.textContent = "Add New Project";
-
-let addProjectButtonContainer = document.createElement("div");
-addProjectButtonContainer.classList.toggle("add-project-btn");
-addProjectButtonContainer.appendChild(addProjectButton);
-
-
-// add see all projects button
-let seeAllProjectsButtonContainer = document.createElement("div");
-seeAllProjectsButtonContainer.classList.toggle("see-all-projects-btn");
-
-let seeAllProjectsButton = document.createElement("button");
-seeAllProjectsButton.innerHTML = `
-    <div class="text">See All Projects</div>
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg>
-`;
-seeAllProjectsButtonContainer.appendChild(seeAllProjectsButton);
-
-
-main.appendChild(todayTasksContainer);
-main.appendChild(projectsContainer);
-main.appendChild(addProjectButtonContainer);
-main.appendChild(seeAllProjectsButtonContainer);
-
-
-// after adding all these, we have buttons
-addTaskButton.addEventListener("click", () => {
-    addDialog.addTaskDialog.showModal();
-});
-
-addProjectButton.addEventListener('click', () => {
-    addDialog.addProjectDialog.showModal();
-});
-
-seeAllProjectsButton.addEventListener('click', () => {
-    console.log("hello, allprojects")
-});
-
 // get body of the current document, and attach the main elements to it
 function renderMain() {
     let body = document.querySelector('body');
+    let removedProjects;
+
+    // if no projects, returns null
+    let projects = body.querySelector(".projects")
+    if (projects) {
+        removedProjects = body.removeChild(projects);
+    }
 
     // tasks
     body.appendChild(main);
 
     // non-visible elements at the bottom
-    document.body.appendChild(addDialog.addTaskDialog);
-    document.body.appendChild(addDialog.addProjectDialog);
+    body.appendChild(addDialog.addTaskDialog);
+
+    // addDialogs is for the today's tasks on the mainpage
+    addDialogs.changeTaskDialogFor("999");
+    body.appendChild(addDialog.addProjectDialog);
+
+    return removedProjects;
 };
 
 export default { renderMain, renderTasks };
