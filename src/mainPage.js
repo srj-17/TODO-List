@@ -17,7 +17,7 @@ let todayTasksHeader = `
 todayTasksContainer.innerHTML = todayTasksHeader;
 
 
-// TODO: adding today's tasks dynamically
+// adding today's tasks dynamically
 let todayTasks = document.createElement("ul");
 todayTasks.classList.toggle("today-tasks");
 todayTasksContainer.appendChild(todayTasks);
@@ -65,8 +65,6 @@ addTaskButtonContainer.appendChild(addTaskButton);
 // append the task button
 todayTasksContainer.appendChild(addTaskButtonContainer);
 
-// TODO: add clickable dropdown to highest-priority-projects-container 
-// to show some of its tasks  
 let projectsContainer= document.createElement("div");
 projectsContainer.classList.toggle("highest-priority-projects-container");
 

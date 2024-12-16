@@ -93,14 +93,13 @@ function clearForm(form) {
 let addTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #add")
 addTaskDialogButton.addEventListener("click", (event) => {
     if (addTaskDialog.hasAttribute("open")) {
-        // TODO: add these attributes to the user.getTodayTodo().addTodo(...)
         let title = addTaskDialog.querySelector("input#title").value
         let description = addTaskDialog.querySelector("textarea#description").value
         let dueDate = addTaskDialog.querySelector("input#duedate").value
         let priority = addTaskDialog.querySelector("[name='priority']")
         let notes = addTaskDialog.querySelector("input#notes").value
 
-        // TODO: getting id and adding todo according to that id
+        // getting id and adding todo according to that id
         let projectId = addTaskDialog.id;
 
         if (projectId === "999") {
@@ -178,5 +177,8 @@ addProjectDialogButton.addEventListener("click", (event) => {
         }
     }
 });
+
+// ------------------ edit dialog ------------------------- //
+    // in many aspects, similar to add dialog
 
 export default { addTaskDialog, changeTaskDialogFor, addProjectDialog };

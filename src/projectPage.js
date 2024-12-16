@@ -124,10 +124,6 @@ function renderProjectPage() {
     projectsList.addEventListener("click", (event) => {
         let projectId = event.target.parentElement.id;
 
-        // render the project's tasks inside the projects
-        // node 
-        // TODO: or maybe inside body?, 
-            // what kind of structure of page do you want?
         renderProjectTasks(projectId, projects);
         configureButtons(projectId, projects);
         addDialogs.changeTaskDialogFor(projectId);
