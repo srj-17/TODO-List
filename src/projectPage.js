@@ -99,11 +99,12 @@ function configureButtons(id, node) {
             } else if (event.target.classList.contains("edit-button")) {
                 let todoToEdit = event.target.closest(".todo");
                 let id = todoToEdit.id.split("-").at(1);
+
                 // TODO: I think I'll need a new dialog, an EditDialog for this one
                     // based on the addDialog because I'll have to use it later
                     // for the todayTodos as well
-                // addDialogs.changeTaskDialogFor(id);
-                // addDialogs.addTaskDialog.showModal();
+                 addDialogs.changeTaskDialogFor(id);
+                 addDialogs.editTaskDialog.showModal();
             }
         } 
     });

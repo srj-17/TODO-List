@@ -11,14 +11,14 @@ class Todo {
 
         // todo should be created even if title is not given, project should check for title
         this.title = title || `${id}`;
-        this.description = description;
+        this.description = description || "No description";
 
         // have to check if valid duedate
         // if it is not, set today's date
         this.duedate = duedate ? new Date(duedate) : new Date();
 
         this.priority = +priority | 3;
-        this.notes = notes;
+        this.notes = notes || "No notes";
 
         // status stores if todo is done
         this.status = false;
@@ -29,11 +29,21 @@ class Todo {
     }   
 
     edit(title, description, duedate, priority, notes) {
-        this.title = title;
-        this.description = description;
-        this.duedate = duedate;
-        this.priority = priority;
-        this.notes = notes;
+        // only edit if given, if not, don't edit
+        this.title = title || this.title;
+        this.description = description || this.description;
+
+        // wanted to put old duedate given as duedate, but didn't work
+        // thus, used the same logic as addTodo for date
+        //
+            // Possible solution: don't change date at all! 
+            // or find a way to solve this
+        console.log(`hello ${duedate}`)
+        this.duedate = duedate ? new Date(duedate) : new Date();
+        console.log(this.duedate)
+
+        this.priority = priority || this.priority;
+        this.notes = notes || this.notes;
     }
 }
 

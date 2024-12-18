@@ -136,7 +136,7 @@ function renderMain() {
     let removedProjects;
 
     // if no projects, returns null
-    let projects = body.querySelector(".projects")
+    let projects = body.querySelector(".projects");
     if (projects) {
         removedProjects = body.removeChild(projects);
     }
@@ -146,6 +146,8 @@ function renderMain() {
 
     // non-visible elements at the bottom
     body.appendChild(addDialog.addTaskDialog);
+
+    body.appendChild(addDialog.editTaskDialog);
 
     // addDialogs is for the today's tasks on the mainpage
     addDialogs.changeTaskDialogFor("999");

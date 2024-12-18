@@ -68,12 +68,6 @@ addTaskDialog.classList.toggle("add-task-dialog");
 addTaskDialog.classList.toggle("dialog");
 addTaskDialog.appendChild(addTaskForm);
 
-// change the task dialog for the given project
-// Question: does it change the dialog in dom as well? Do we need to render Again?
-function changeTaskDialogFor(id) {
-    addTaskDialog.id = id;
-}
-
 //configure cancel button to cancel the add todo task
 let cancelTaskDialogButton = addTaskDialog.querySelector(".dialog-buttons #cancel")
 cancelTaskDialogButton.addEventListener("click", () => {
@@ -106,7 +100,7 @@ addTaskDialogButton.addEventListener("click", (event) => {
             user.getTodayTodos().addTodo(title, description, dueDate, priority, notes);
             mainPage.renderTasks();
         } else {
-            user.getProject(projectId).addTodo(title, description, dueDate, priority, notes)
+            user.getProject(projectId).addTodo(title, description, dueDate, priority, notes);
 
             // render the projects of id _ under the projects div
             let projects = document.querySelector(".projects");
@@ -179,6 +173,118 @@ addProjectDialogButton.addEventListener("click", (event) => {
 });
 
 // ------------------ edit dialog ------------------------- //
-    // in many aspects, similar to add dialog
+let editTaskForm = document.createElement("form");
+editTaskForm.setAttribute("action", "/index.html");
+editTaskForm.setAttribute("method", "get");
 
-export default { addTaskDialog, changeTaskDialogFor, addProjectDialog };
+let editTaskFormElements = [
+    `
+    <div>
+        <label class="to-bold" for="title">Title</label>
+        <input type="text" id="title" placeholder="Title">
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="duedate">Due-Date</label>
+        <input type="date" id="duedate" placeholder=${new Date()}>
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="notes">Notes</label>
+        <input type="text" id="notes" placeholder="notes">
+    </div>
+    `,
+    `
+    <div>
+        <label class="to-bold" for="description">Description</label>
+        <textarea id="description" placeholder="Todo description"></textarea>
+    </div>
+    `,
+    `
+    <fieldset class="priority">
+        <legend class="to-bold">Priority</legend>
+        <div>
+            <input type="radio" id="high" name="priority" value="1">
+            <label for="high">High</label>
+        </div>
+        <div>
+            <input type="radio" id="medium" name="priority" value="2">
+            <label for="medium">Medium</label>
+        </div>
+        <div>
+            <input type="radio" id="low" name="priority" value="3">
+            <label for="low">Low</label>
+        </div>
+    </fieldset>
+    `,
+    `
+    <div class="dialog-buttons">
+        <button type="submit" id="edit">Edit</button>
+        <button type="button" id="cancel">Cancel</button>
+    </div>
+    `,
+];
+
+let editTaskFormHTML = ``
+editTaskFormElements.forEach(element => {
+    editTaskFormHTML = editTaskFormHTML + element;
+});
+editTaskForm.innerHTML = editTaskFormHTML;
+
+let editTaskDialog = document.createElement("dialog");
+editTaskDialog.classList.toggle("add-task-dialog");
+editTaskDialog.classList.toggle("dialog");
+editTaskDialog.appendChild(editTaskForm);
+
+//configure cancel button to cancel the add todo task
+let cancelEditTaskDialogButton = editTaskDialog.querySelector(".dialog-buttons #cancel")
+cancelEditTaskDialogButton.addEventListener("click", () => {
+    if (editTaskDialog.hasAttribute("open")) {
+        editTaskDialog.close()
+    }
+})
+
+// configure the add button to add todo task
+let editTaskDialogButton = editTaskDialog.querySelector(".dialog-buttons #edit")
+editTaskDialogButton.addEventListener("click", (event) => {
+    if (editTaskDialog.hasAttribute("open")) {
+        let title = editTaskDialog.querySelector("input#title").value
+        let description = editTaskDialog.querySelector("textarea#description").value
+        let dueDate = editTaskDialog.querySelector("input#duedate").value 
+        let priority = editTaskDialog.querySelector("[name='priority']")
+        let notes = editTaskDialog.querySelector("input#notes").value
+
+        // getting id and adding todo according to that id
+        let projectId = editTaskDialog.id;
+
+        if (projectId === "999") {
+            user.getTodayTodos().editTodo(title, description, dueDate, priority, notes);
+            mainPage.renderTasks();
+        } else {
+            user.getProject(projectId).editTodo(title, description, dueDate, priority, notes);
+
+            //render the projects of id _ under the projects div
+            //let projects = document.querySelector(".projects");
+            //projectPage.renderProjectTasks(projectId, projects);
+            //console.log(user.getProject(parentDialogId).getTodos())
+        }
+
+        // prevent the form from submitting, and instead just add the todos to the today's todo
+        event.preventDefault();
+        if (editTaskDialog.hasAttribute("open")) {
+            clearForm(editTaskForm);
+            editTaskDialog.close()
+        }
+    }
+});
+
+// change the task dialog for the given project
+// Question: does it change the dialog in dom as well? Do we need to render Again?
+function changeTaskDialogFor(id) {
+    addTaskDialog.id = id;
+    editTaskDialog.id = id;
+}
+
+export default { addTaskDialog, changeTaskDialogFor, addProjectDialog, editTaskDialog };
