@@ -94,8 +94,8 @@ function configureButtons(id, node) {
             if (event.target.classList.contains("delete-button")) {
                 let todoToDelete = event.target.closest(".todo");
                 let id = todoToDelete.id.split("-").at(1);
-                targetProject.deleteTodo(id)
-                renderProjectTasks();
+                targetProject.deleteTodo(id);
+                renderProjectTasks(targetProject.id, projects);
             } else if (event.target.classList.contains("edit-button")) {
                 let todoToEdit = event.target.closest(".todo");
                 let id = todoToEdit.id.split("-").at(1);

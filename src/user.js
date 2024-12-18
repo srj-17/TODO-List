@@ -30,7 +30,7 @@ const user = (function () {
     }
 
     function getProject(id) {
-        return projects[id];
+        return projects.at(id);
     }
 
     // TODO: id of projects should be updated after deleting in DOM 
