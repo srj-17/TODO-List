@@ -127,8 +127,24 @@ function renderProjectPage() {
 
         renderProjectTasks(projectId, projects);
         configureButtons(projectId, projects);
+
         addDialogs.changeTaskDialogFor(projectId);
     });
+
+    projects.addEventListener("click", (event) => {
+        // check if the button press comes from todo
+            // closest("todo") returns null if no parent has todo class
+        if ((event.target.classList.contains("delete-button") 
+            || event.target.classList.contains("edit-button"))
+            && event.target.closest("todo")){
+            let parentTodo = event.target.closest("todo");
+            let parentTodoId = parentTodo.id.split("-");
+            let projectId = parentTodoId.at(0);
+            let todoId = parentTodoId.at(1);
+
+            addDialogs.changeTaskDialogFor(projectId, todoId);
+        }
+    })
 
     body.appendChild(projects);
 

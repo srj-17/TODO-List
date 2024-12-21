@@ -256,19 +256,25 @@ editTaskDialogButton.addEventListener("click", (event) => {
         let priority = editTaskDialog.querySelector("[name='priority']")
         let notes = editTaskDialog.querySelector("input#notes").value
 
-        // getting id and adding todo according to that id
-        let projectId = editTaskDialog.id;
+        // getting id for project and todo and editing todo according to that id
+        let projectId = editTaskDialog.id.split("-").at(0);
+        let todoId = editTaskDialog.id.split("-").at(1);
 
         if (projectId === "999") {
-            user.getTodayTodos().editTodo(title, description, dueDate, priority, notes);
+            // i'm editing without providing the id, maybe that's a problem
+                // yes! that's it... the actual function sees title as id, and so on
+            // TODO: provide id for todos
+            user.getTodayTodos().editTodo(todoId, title, description, dueDate, priority, notes);
             mainPage.renderTasks();
         } else {
-            user.getProject(projectId).editTodo(title, description, dueDate, priority, notes);
+            console.log(user.getProject(projectId))
+            user.getProject(projectId).editTodo(todoId, title, description, dueDate, priority, notes);
 
             //render the projects of id _ under the projects div
-            //let projects = document.querySelector(".projects");
+            let projects = document.querySelector(".projects");
+            console.log(projects)
             //projectPage.renderProjectTasks(projectId, projects);
-            //console.log(user.getProject(parentDialogId).getTodos())
+            console.log(user.getProject(projectId).getTodos())
         }
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
@@ -282,9 +288,14 @@ editTaskDialogButton.addEventListener("click", (event) => {
 
 // change the task dialog for the given project
 // Question: does it change the dialog in dom as well? Do we need to render Again?
-function changeTaskDialogFor(id) {
-    addTaskDialog.id = id;
-    editTaskDialog.id = id;
+function changeTaskDialogFor(projectId, todoId) {
+    addTaskDialog.id = projectId;
+
+    // if there's todoId
+    // we assume that's for editTodo dialog
+    if (todoId) {
+        editTaskDialog.id = `${projectId}-${todoId}`;
+    }
 }
 
 export default { addTaskDialog, changeTaskDialogFor, addProjectDialog, editTaskDialog };
