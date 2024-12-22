@@ -272,9 +272,7 @@ editTaskDialogButton.addEventListener("click", (event) => {
 
             //render the projects of id _ under the projects div
             let projects = document.querySelector(".projects");
-            console.log(projects)
-            //projectPage.renderProjectTasks(projectId, projects);
-            console.log(user.getProject(projectId).getTodos())
+            projectPage.renderProjectTasks(projectId, projects);
         }
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
