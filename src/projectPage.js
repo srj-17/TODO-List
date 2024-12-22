@@ -83,6 +83,8 @@ function renderProjectTasks(id, node) {
     });
 }
 
+// id = project id
+// node = node on which the buttons are (any parent)
 function configureButtons(id, node) {
     let targetProject = user.getProject(id);
 

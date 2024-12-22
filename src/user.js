@@ -10,13 +10,7 @@ const user = (function () {
         return todayTodos.addTodo(title, description, duedate, priority, notes)
     }
 
-    let editTodayTodos = (id, title, description, duedate, priority, notes) => {
-        return todayTodos.addTodo(id, title, description, duedate, priority, notes)
-    }
-
     let getTodayTodos = () => todayTodos;
-
-    let deleteTodayTodos = (id) => todayTodos.deleteTodo(id);
 
     function addProject(name) {
         let id = projects.length;
@@ -43,9 +37,7 @@ const user = (function () {
         getProjects,
         getProject,
         addTodayTodos: addTodayTodos,
-        editTodayTodos: editTodayTodos,
         getTodayTodos: getTodayTodos,
-        deleteTodayTodos: deleteTodayTodos,
     };
 }) ();
 

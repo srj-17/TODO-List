@@ -44,10 +44,10 @@ function renderTasks() {
                     <label for="complete"> Completed </label>
                     <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
                 </div>
-                <!-- might remove this, complex, or use it for checklist instead -->
-                <!--<div class="project-dropdown-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="M480-360 280-560h400L480-360Z"/></svg>
-                </div>-->
+                <div class="buttons">
+                    <button class="delete-button">Delete</button>
+                    <button class="edit-button">Edit</button>
+                </div>
             </li>
             `
         todayTasksHTML = todayTasksHTML + todoItem;
@@ -128,7 +128,26 @@ todayTasks.addEventListener("click", (event) => {
         console.log(document.querySelector("#complete"))
         renderTasks();
     }
-})
+});
+
+// for edit and delete todo
+todayTasks.addEventListener("click", (event) => {
+    let classList = event.target.parentNode.classList;
+    if (classList.contains("buttons")) {
+        if (event.target.classList.contains("delete-button")) {
+            let todoToDelete = event.target.closest(".todo");
+            let id = todoToDelete.id.split("-").at(1);
+            user.getTodayTodos().deleteTodo(id);
+            renderTasks();
+        } else if (event.target.classList.contains("edit-button")) {
+            let todoToEdit = event.target.closest(".todo");
+            let id = todoToEdit.id.split("-").at(1);
+
+            addDialogs.changeTaskDialogFor("999", id);
+            addDialogs.editTaskDialog.showModal();
+        }
+    } 
+    });
 
 // get body of the current document, and attach the main elements to it
 function renderMain() {

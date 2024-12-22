@@ -267,7 +267,6 @@ editTaskDialogButton.addEventListener("click", (event) => {
             user.getTodayTodos().editTodo(todoId, title, description, dueDate, priority, notes);
             mainPage.renderTasks();
         } else {
-            console.log(user.getProject(projectId))
             user.getProject(projectId).editTodo(todoId, title, description, dueDate, priority, notes);
 
             //render the projects of id _ under the projects div
