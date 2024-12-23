@@ -15,32 +15,111 @@ let projectsList = document.createElement("ul");
 projectsList.classList.toggle("projects-list")
 projects.appendChild(projectsList);
 
-let projectsListsHTML = ``;
 function renderProjects() {
+    // remove previous projects
+    let previousList = Array.from(document.querySelectorAll("li"));
+    previousList.forEach(li => {
+        projectsList.removeChild(li);
+    });
+
+    // add current projects to the list
     let userProjects = user.getProjects();
     userProjects.forEach(item => {
-        let todoItem = `
-            <li class="project" id="${item.id}">
-                <div class="project-name">${item.name}</div>
-            </li>
-        `
-        projectsListsHTML = projectsListsHTML + todoItem;
+        let projectItem = document.createElement("li");
+        projectItem.classList.toggle("project");
+        projectItem.id = `project-${item.id}`;
+
+        let projectName = document.createElement("div");
+        projectName.classList.toggle("project-name");
+        projectName.textContent = `${item.name}`;
+        projectItem.appendChild(projectName);
+
+        let deleteProjectButtonContainer = document.createElement("div");
+        deleteProjectButtonContainer.classList.toggle("delete-project-button-container");
+        deleteProjectButtonContainer.hidden = true;
+        let deleteProjectButton = document.createElement("button");
+        deleteProjectButton.classList.toggle("delete-project-button");
+        deleteProjectButton.textContent = "Delete project";
+        deleteProjectButtonContainer.appendChild(deleteProjectButton);
+        projectItem.appendChild(deleteProjectButtonContainer);
+
+        // adding `add task` button
+        let addTaskButtonContainer = document.createElement("div");
+        addTaskButtonContainer.classList.toggle("add-task-button-container");
+        let addTaskButton = document.createElement("button");
+        addTaskButton.classList.toggle("add-task-button");
+        addTaskButton.textContent = "Add Task";
+        addTaskButtonContainer.hidden = true;
+        addTaskButtonContainer.appendChild(addTaskButton);
+        projectItem.appendChild(addTaskButtonContainer);
+
+        deleteProjectButton.addEventListener("click", () => {
+            // indexes are not rerendered here, so problem when 
+            // deleting, cause deleting means getting id again
+            // this dammmmmmmman splice
+            user.deleteProject(projectItem.id);
+            renderProjects();
+            renderFirstProject();
+        });
+
+        addTaskButton.addEventListener("click", () => {
+            addDialogs.changeTaskDialogFor(projectItem.id);
+            addDialogs.addTaskDialog.show();
+        });
+
+        projectsList.appendChild(projectItem);
+        configureProjectButtons(projectItem);
     });
-    projectsList.innerHTML = projectsListsHTML;
+}
+
+function renderFirstProject() {
+    // querySelector selects the first node that matches the query
+    let firstProject = projects.querySelector(".project");
+    if (firstProject) {
+        let id = firstProject.id.split("-").at(1);
+        renderProjectTasks(id, projects);
+    }
+}
+
+function hideAllProjectButtons() {
+    let deleteProjectButtons = Array.from(projectsList.querySelectorAll(".delete-project-button-container"));
+    let addTaskButtons = Array.from(projectsList.querySelectorAll(".add-task-button-container"));
+
+    deleteProjectButtons.forEach(button => {
+        if(!button.hasAttribute("hidden")) {
+            button.hidden = true;
+        }
+    });
+
+    addTaskButtons.forEach(button => {
+        if (!button.hasAttribute("hidden")) {
+            button.hidden = true;
+        }
+    });
+}
+
+function configureProjectButtons(projectNode) {
+    projectNode.addEventListener("click", () => {
+        hideAllProjectButtons();
+        //let project = projects.querySelector(`#project-${id}`);
+        let childDeleteButton = projectNode.querySelector(".delete-project-button-container");
+        let childAddButton = projectNode.querySelector(".add-task-button-container");
+
+        if (childDeleteButton.hasAttribute("hidden")) {
+            childDeleteButton.hidden = false;
+        }
+
+        if (childAddButton.hasAttribute("hidden")) {
+            childAddButton.hidden = false;
+        }
+
+    });
 }
 
 // node = node to attach the rendered tasks on
 function renderProjectTasks(id, node) {
     let targetProject = user.getProject(id);
     let targetProjectTasks = targetProject.getTodos();
-
-    // adding `add task` button
-    let addTaskButtonContainer = document.createElement("div");
-    addTaskButtonContainer.classList.toggle("add-task-button-container");
-    let addTaskButton = document.createElement("button");
-    addTaskButton.classList.toggle("add-task-button");
-    addTaskButton.textContent = "Add Task";
-    addTaskButtonContainer.appendChild(addTaskButton);
 
     // adding todos themselves
     let todosHTML = ``
@@ -68,19 +147,12 @@ function renderProjectTasks(id, node) {
     
     // removing previous task and add-button nodes (if any)
     let previousProjectTasks = node.querySelector(".project-tasks");
-    let previousAddTask = node.querySelector(".add-task-button-container");
-    if (previousProjectTasks || previousAddTask) {
+    if (previousProjectTasks) {
         node.removeChild(previousProjectTasks);
-        node.removeChild(previousAddTask);
     }
 
-    // appending the tasks and add-button nodes that are created at this moment
+    // appending the tasks that are created at this moment
     node.appendChild(projectTasks);
-    node.appendChild(addTaskButtonContainer);
-
-    addTaskButton.addEventListener("click", () => {
-        addDialogs.addTaskDialog.show();
-    });
 }
 
 // id = project id
@@ -102,11 +174,8 @@ function configureButtons(id, node) {
                 let todoToEdit = event.target.closest(".todo");
                 let id = todoToEdit.id.split("-").at(1);
 
-                // TODO: I think I'll need a new dialog, an EditDialog for this one
-                    // based on the addDialog because I'll have to use it later
-                    // for the todayTodos as well
-                 addDialogs.changeTaskDialogFor(id);
-                 addDialogs.editTaskDialog.showModal();
+                addDialogs.changeTaskDialogFor(id);
+                addDialogs.editTaskDialog.showModal();
             }
         } 
     });
@@ -124,13 +193,18 @@ function renderProjectPage() {
 
     renderProjects();
 
+    renderFirstProject();
+
     projectsList.addEventListener("click", (event) => {
-        let projectId = event.target.parentElement.id;
+        if (event.target.classList.contains("project-name")) {
+            let parentProject = event.target.parentElement;
+            let projectId = parentProject.id.split("-").at(1);
 
-        renderProjectTasks(projectId, projects);
-        configureButtons(projectId, projects);
+            renderProjectTasks(projectId, projects);
+            configureButtons(projectId, projects);
 
-        addDialogs.changeTaskDialogFor(projectId);
+            addDialogs.changeTaskDialogFor(projectId);
+        }
     });
 
     projects.addEventListener("click", (event) => {
@@ -146,7 +220,7 @@ function renderProjectPage() {
 
             addDialogs.changeTaskDialogFor(projectId, todoId);
         }
-    })
+    });
 
     body.appendChild(projects);
 

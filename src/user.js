@@ -31,6 +31,11 @@ const user = (function () {
     function deleteProject(id) {
         let index = id;
         projects.splice(index, 1);
+
+        // reset the ids
+        projects.forEach((project, index) => {
+            project.id = index;
+        });
     }
 
     return { addProject, 
@@ -38,6 +43,7 @@ const user = (function () {
         getProject,
         addTodayTodos: addTodayTodos,
         getTodayTodos: getTodayTodos,
+        deleteProject,
     };
 }) ();
 
