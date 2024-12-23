@@ -37,15 +37,12 @@ class Project {
     deleteTodo(id) {
         let index = id;
         this.todoList.splice(index, 1);
-        console.log(this.todoList)
 
         // all todos should have their ids changed, since index changes after this
         // operation
         this.todoList.forEach((todo, index) => {
             todo.id = index;
         });
-
-        //domController.render();
     }
 
     getId() {

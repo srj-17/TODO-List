@@ -124,8 +124,6 @@ todayTasks.addEventListener("click", (event) => {
 
         targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
         targetTodoObject.status = (targetTodoObject.status) ? false : true;
-        console.log(targetTodoObject.status)
-        console.log(document.querySelector("#complete"))
         renderTasks();
     }
 });

@@ -105,7 +105,6 @@ addTaskDialogButton.addEventListener("click", (event) => {
             // render the projects of id _ under the projects div
             let projects = document.querySelector(".projects");
             projectPage.renderProjectTasks(projectId, projects);
-            //console.log(user.getProject(parentDialogId).getTodos())
         }
 
         // prevent the form from submitting, and instead just add the todos to the today's todo

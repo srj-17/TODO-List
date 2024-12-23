@@ -24,23 +24,13 @@ const domController = (function () {
         // anyways, so, the removedMain and removedProjects are cleaned
     function renderMainPage() {
         // render main page elements inside body
-        if (removedMain) {
-            removedProjects = body.removeChild(projects);
-            body.appendChild(removedMain);
-        } else {
-            removedProjects = mainPageElements.renderMain(body);
-        }
+        mainPageElements.renderMain();
     }
 
     function renderProjectPage() {
-        if (removedProjects) {
-            removedMain = body.removeChild(main);
-            body.appendChild(removedProjects);
-        } else {
-            removedMain = projectPage.renderProjectPage();
-        }
+        removedMain = projectPage.renderProjectPage();
     }
-    
+
     return { renderMain: renderMainPage, renderProjects: renderProjectPage };
 }) ();
 

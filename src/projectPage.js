@@ -1,15 +1,32 @@
 import user from "./user";
 import addDialogs from "./addDialogs";
+import domController from "./domController";
 
 let projects = document.createElement("div");
 projects.classList.toggle("projects");
 
+//let returnButtonContainer = document.createElement("div");
+//returnButtonContainer.classList.toggle("return-button-container");
+//let returnButton = document.createElement("button");
+//returnButton.classList.toggle("return-button");
+//returnButton.textContent = "Return";
+//returnButtonContainer.appendChild(returnButton);
+//projects.appendChild(returnButtonContainer);
+
 let projectsHeader = `
+    <div class="return-button-container">
+        <button class="return-button"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></button>
+    </div>
     <div class="projects-header">
         Projects
     </div>
 `
 projects.innerHTML = projectsHeader;
+
+let returnButton = projects.querySelector(".return-button");
+returnButton.addEventListener("click", () => {
+    domController.renderMain();
+});
 
 let projectsList = document.createElement("ul");
 projectsList.classList.toggle("projects-list")
@@ -17,7 +34,7 @@ projects.appendChild(projectsList);
 
 function renderProjects() {
     // remove previous projects
-    let previousList = Array.from(document.querySelectorAll("li"));
+    let previousList = Array.from(projects.querySelectorAll("li"));
     previousList.forEach(li => {
         projectsList.removeChild(li);
     });
@@ -54,9 +71,6 @@ function renderProjects() {
         projectItem.appendChild(addTaskButtonContainer);
 
         deleteProjectButton.addEventListener("click", () => {
-            // indexes are not rerendered here, so problem when 
-            // deleting, cause deleting means getting id again
-            // this dammmmmmmman splice
             user.deleteProject(projectItem.id);
             renderProjects();
             renderFirstProject();
@@ -70,12 +84,16 @@ function renderProjects() {
         projectsList.appendChild(projectItem);
         configureProjectButtons(projectItem);
     });
+
+    renderFirstProject();
 }
 
 function renderFirstProject() {
     // querySelector selects the first node that matches the query
     let firstProject = projects.querySelector(".project");
     if (firstProject) {
+        let clickEvent = new Event("click");
+        firstProject.dispatchEvent(clickEvent);
         let id = firstProject.id.split("-").at(1);
         renderProjectTasks(id, projects);
     }
@@ -192,8 +210,6 @@ function renderProjectPage() {
     }
 
     renderProjects();
-
-    renderFirstProject();
 
     projectsList.addEventListener("click", (event) => {
         if (event.target.classList.contains("project-name")) {
