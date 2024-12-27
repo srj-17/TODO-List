@@ -37,13 +37,12 @@ function renderTasks() {
     todayTodoList.forEach(todo => {
         let todoItem = `
             <li class="todo" id="${user.getTodayTodos().id}-${todo.id}">
+                <div class="todo-completion-status">
+                    <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
+                </div>
                 <div class="todo-title">${todo.title}</div>
                 <div class="todo-desc">${todo.description}</div>
                 <div class="todo-duedate">${todo.duedate.toDateString()}</div>
-                <div class="todo-completion-status">
-                    <label for="complete"> Completed </label>
-                    <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
-                </div>
                 <div class="buttons">
                     <button class="delete-button">Delete</button>
                     <button class="edit-button">Edit</button>

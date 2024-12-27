@@ -8,12 +8,28 @@
     --std-gap: 10px;
     --std-padding: 10px;
     --std-margin: 10px;
+    --std-border-radius: 10px;
+
+    /* colors */
+    --bg-color:	hsl(194, 49%, 14%);
+    --primary: hsl(178, 17%, 58%);
+    --secondary: #224870;
+    --accent: hsl(349, 64%, 39%);
+    --text: #ffffff;
+
+    /* derived colors */
+    --bg-todo: hsl(194, 49%, 21%);
+    --bg-delete: hsl(349, 64%, 49%);
+    --bg-edit:hsl(178, 17%, 48%); 
+    --bg-add: hsl(120, 20%, 48%);
 }
 
 body {
     display: grid;
     grid-auto-flow: row;
     gap: 30px;
+    background: var(--bg-color);
+    color: var(--text);
 }
 
 .header {
@@ -25,6 +41,64 @@ body {
     font-size: 3rem;
 }
 
+button {
+    border: 0;
+    border-radius: var(--std-border-radius);
+    padding: 2px 10px;
+}
+
+button.delete-button {
+    background: var(--bg-delete);
+    color: var(--text);
+    font-weight: bold;
+}
+
+button.delete-button:active {
+    background: hsl(349, 64%, 20%);
+}
+
+button.edit-button {
+    background: var(--bg-edit);
+    color: var(--text);
+    font-weight: bold;
+}
+
+button.edit-button:active {
+    background: hsl(178, 17%, 28%);
+}
+
+.add-task-btn > * {
+    background: var(--bg-add);
+    color: var(--text);
+    font-weight: bold;
+}
+
+.add-task-btn > *:focus {
+    background: hsl(120, 20%, 28%);
+}
+
+.add-project-btn > * {
+    background: var(--bg-add);
+    color: var(--text);
+    font-weight: bold;
+}
+
+.see-all-projects-btn > * {
+    background: var(--primary);
+    font-weight: bold;
+}
+
+.see-all-projects-btn > *:focus {
+    background: hsl(178, 17%, 48%);
+}
+
+.see-all-projects-btn > *:hover {
+    background: hsl(178, 17%, 68%);
+}
+
+button:hover {
+    color: #222;
+}
 
 /* main page gets these stylings */
 .main {
@@ -40,7 +114,7 @@ body {
              display: grid;
              gap: var(--std-gap);
          }
-
+         
          .today-tasks-header {
              display: grid;
              text-align: center;
@@ -57,12 +131,24 @@ body {
              grid-auto-flow: column;
              place-content: center;
              gap: 20px;
-             padding: 2px 0;
+             background: var(--bg-todo);
+             padding: 8px 20px;
+             border-radius: var(--std-border-radius);
          }
 
          .add-task-btn {
              display: grid;
              place-content: center;
+         }
+
+         .todo > .buttons {
+             display: grid;
+             grid-auto-flow: column;
+             gap: 8px;
+         }
+
+         .todo-completion-status > #complete {
+             width: 18px;
          }
 
          .highest-priority-projects-container {

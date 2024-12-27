@@ -41,6 +41,15 @@ function renderProjects() {
 
     // add current projects to the list
     let userProjects = user.getProjects();
+
+    if (userProjects.length === 0) {
+        let noProjects = document.createElement("li");
+        noProjects.classList.toggle("no-projects");
+        noProjects.textContent = "No Projects Created";
+
+        projectsList.appendChild(noProjects);
+    }
+
     userProjects.forEach(item => {
         let projectItem = document.createElement("li");
         projectItem.classList.toggle("project");
