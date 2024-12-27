@@ -22,6 +22,7 @@
     --bg-delete: hsl(349, 64%, 49%);
     --bg-edit:hsl(178, 17%, 48%); 
     --bg-add: hsl(120, 20%, 48%);
+    --bg-dialog: hsl(194, 100%, 18%);
 }
 
 body {
@@ -41,6 +42,7 @@ body {
     font-size: 3rem;
 }
 
+/* buttons */
 button {
     border: 0;
     border-radius: var(--std-border-radius);
@@ -98,6 +100,17 @@ button.edit-button:active {
 
 button:hover {
     color: #222;
+}
+
+/* inputs */
+input[type="text"], 
+input[type="date"],
+input[type="text-field"],
+textarea {
+    outline: none;
+    border-radius: 5px;
+    padding: 1px 5px;
+    font-size: 0.9rem;
 }
 
 /* main page gets these stylings */
@@ -194,7 +207,6 @@ button:hover {
              height: 50px;
              justify-items: center;
          }
-
      }
 
 .projects {
@@ -208,12 +220,12 @@ button:hover {
 
 dialog {
     margin: auto;
-    /*width: 10%;*/
-    /*height: 10%;*/
-    background-color: white;
     border: 3px solid black;
     border-radius: 10px;
     padding: 10px; 
+    border: 3px solid var(--accent);
+    background: var(--bg-dialog);
+    color: var(--text);
 }
 
 .add-task-dialog form {

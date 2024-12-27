@@ -77,7 +77,10 @@ cancelTaskDialogButton.addEventListener("click", () => {
 })
 
 function clearForm(form) {
-    let toClear = Array.from(form.querySelectorAll("input"));
+    let inputs = Array.from(form.querySelectorAll("input"));
+    let textareas = Array.from(form.querySelectorAll("textarea"));
+    let toClear = inputs.concat(textareas);
+
     toClear.forEach(inputField => {
         inputField.value = ""
     });
