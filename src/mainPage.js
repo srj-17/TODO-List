@@ -94,6 +94,7 @@ main.appendChild(seeAllProjectsButtonContainer);
 
 // after adding all these, we have buttons
 addTaskButton.addEventListener("click", () => {
+    addDialogs.changeTaskDialogFor("999");
     addDialog.addTaskDialog.showModal();
 });
 
@@ -166,7 +167,6 @@ function renderMain() {
     body.appendChild(addDialog.editTaskDialog);
 
     // addDialogs is for the today's tasks on the mainpage
-    addDialogs.changeTaskDialogFor("999");
     body.appendChild(addDialog.addProjectDialog);
 
     return removedProjects;
