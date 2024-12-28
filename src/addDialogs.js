@@ -97,7 +97,7 @@ addTaskDialogButton.addEventListener("click", (event) => {
         let notes = addTaskDialog.querySelector("input#notes").value
 
         // getting id and adding todo according to that id
-        let projectId = addTaskDialog.id;
+        let projectId = addTaskDialog.id.split("-").at(1);
 
         if (projectId === "999") {
             user.getTodayTodos().addTodo(title, description, dueDate, priority, notes);
@@ -236,7 +236,7 @@ editTaskFormElements.forEach(element => {
 editTaskForm.innerHTML = editTaskFormHTML;
 
 let editTaskDialog = document.createElement("dialog");
-editTaskDialog.classList.toggle("add-task-dialog");
+editTaskDialog.classList.toggle("edit-task-dialog");
 editTaskDialog.classList.toggle("dialog");
 editTaskDialog.appendChild(editTaskForm);
 

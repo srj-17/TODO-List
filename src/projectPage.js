@@ -34,7 +34,7 @@ projects.appendChild(projectsList);
 
 function renderProjects() {
     // remove previous projects
-    let previousList = Array.from(projects.querySelectorAll("li"));
+    let previousList = Array.from(projects.querySelectorAll("li.project"));
     previousList.forEach(li => {
         projectsList.removeChild(li);
     });
@@ -42,7 +42,22 @@ function renderProjects() {
     // add current projects to the list
     let userProjects = user.getProjects();
 
+    // no projects created
+        // first remove the current no projects text div
+    let previousNoProjects = projectsList.querySelector(".no-projects");
+    if (previousNoProjects) {
+        projectsList.removeChild(previousNoProjects);
+    }
+
+        // then attach it again
     if (userProjects.length === 0) {
+        // remove previous project tasks
+        let projectTasksContainer = projects.querySelector(".project-tasks");
+        let previousProjectTasks = Array.from(projects.querySelectorAll(".project-tasks li.todo"));
+        previousProjectTasks.forEach(todo => {
+            projectTasksContainer.removeChild(todo);
+        });
+
         let noProjects = document.createElement("li");
         noProjects.classList.toggle("no-projects");
         noProjects.textContent = "No Projects Created";
@@ -82,7 +97,6 @@ function renderProjects() {
         deleteProjectButton.addEventListener("click", () => {
             user.deleteProject(projectItem.id);
             renderProjects();
-            renderFirstProject();
         });
 
         addTaskButton.addEventListener("click", () => {
@@ -95,17 +109,19 @@ function renderProjects() {
     });
 
     renderFirstProject();
+    configureButtons(projects);
 }
 
 function renderFirstProject() {
     // querySelector selects the first node that matches the query
+    let firstProjectName = projects.querySelector(".project-name");
     let firstProject = projects.querySelector(".project");
-    if (firstProject) {
-        let clickEvent = new Event("click");
-        firstProject.dispatchEvent(clickEvent);
-        let id = firstProject.id.split("-").at(1);
-        renderProjectTasks(id, projects);
-    }
+    if (firstProjectName) {
+        let clickEvent = new Event("click", { bubbles: true });
+        firstProjectName.dispatchEvent(clickEvent);
+        //let id = firstProject.id.split("-").at(1);
+        //renderProjectTasks(id, projects);
+    } 
 }
 
 function hideAllProjectButtons() {
@@ -153,12 +169,12 @@ function renderProjectTasks(id, node) {
     targetProjectTasks.forEach(todo => {
         let todoItem = `
             <li class="todo" id="${id}-${todo.id}">
+                <div class="todo-completion-status">
+                    <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
+                </div>
                 <div class="todo-title">${todo.title}</div>
                 <div class="todo-desc">${todo.description}</div>
                 <div class="todo-duedate">${todo.duedate.toDateString()}</div>
-                <div class="todo-completion-status">
-                    <label for="complete"> Completed </label>
-                    <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
                 <div class="buttons">
                     <button class="delete-button">Delete</button>
                     <button class="edit-button">Edit</button>
@@ -182,11 +198,9 @@ function renderProjectTasks(id, node) {
     node.appendChild(projectTasks);
 }
 
-// id = project id
+// configuring todo buttons (add / delete)
 // node = node on which the buttons are (any parent)
-function configureButtons(id, node) {
-    let targetProject = user.getProject(id);
-
+function configureButtons(node) {
     // configuring the delete todo button
     // configuring the edit todo button
     node.addEventListener("click", (event) => {
@@ -195,8 +209,10 @@ function configureButtons(id, node) {
             if (event.target.classList.contains("delete-button")) {
                 let todoToDelete = event.target.closest(".todo");
                 let id = todoToDelete.id.split("-").at(1);
-                targetProject.deleteTodo(id);
-                renderProjectTasks(targetProject.id, projects);
+                let parentProjectId = todoToDelete.id.split("-").at(0);
+                let parentProject = user.getProject(parentProjectId);
+                parentProject.deleteTodo(id);
+                renderProjectTasks(parentProjectId, projects);
             } else if (event.target.classList.contains("edit-button")) {
                 let todoToEdit = event.target.closest(".todo");
                 let id = todoToEdit.id.split("-").at(1);
@@ -226,7 +242,6 @@ function renderProjectPage() {
             let projectId = parentProject.id.split("-").at(1);
 
             renderProjectTasks(projectId, projects);
-            configureButtons(projectId, projects);
 
             addDialogs.changeTaskDialogFor(projectId);
         }

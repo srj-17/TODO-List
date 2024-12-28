@@ -49,13 +49,17 @@ button {
     padding: 2px 10px;
 }
 
-button.delete-button {
+button.delete-button,
+button.delete-project-button,
+button#cancel {
     background: var(--bg-delete);
     color: var(--text);
     font-weight: bold;
 }
 
-button.delete-button:active {
+button.delete-button:active,
+button.delete-project-button:active,
+button#cancel:active {
     background: hsl(349, 64%, 20%);
 }
 
@@ -69,13 +73,17 @@ button.edit-button:active {
     background: hsl(178, 17%, 28%);
 }
 
-.add-task-btn > * {
+.add-task-btn > *,
+button.add-task-button,
+button#add {
     background: var(--bg-add);
     color: var(--text);
     font-weight: bold;
 }
 
-.add-task-btn > *:focus {
+.add-task-btn > *:focus,
+button.add-task-button:focus,
+button#add:focus {
     background: hsl(120, 20%, 28%);
 }
 
@@ -212,9 +220,26 @@ textarea {
 .projects {
     display: grid;
     gap: 20px;
+    grid-template-areas: 
+        "return-button project-header project-header"
+        "project-list project-tasks project-tasks";
     padding: 20px;
+
+    .return-button-container {
+        grid-area: return-button;
+    }
+
     .projects-header {
         font-size: 1.5rem;
+        grid-area: project-header;
+    }
+
+    .project-list {
+        grid-area: project-list;
+    }
+
+    .project-tasks {
+        grid-area: project-tasks;
     }
 }
 
@@ -233,13 +258,13 @@ dialog {
     gap: 5px;
 }
 
-.add-task-dialog form > * {
+dialog form > * {
     display: grid;
     gap: 2px;
     padding: 2px;
 }
 
-.add-task-dialog .to-bold {
+dialog .to-bold {
     font-weight: bold;
 }
 
@@ -250,9 +275,13 @@ dialog {
     resize: none;
 }
 
-.add-task-dialog .dialog-buttons,
+dialog .dialog-buttons,
 .add-task-dialog .priority{
     grid-auto-flow: column;
+}
+
+dialog .dialog-buttons {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 ::backdrop {
