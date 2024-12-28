@@ -20,6 +20,9 @@ let projectsHeader = `
     <div class="projects-header">
         Projects
     </div>
+    <div class="tasks-header">
+        Tasks
+    </div>
 `
 projects.innerHTML = projectsHeader;
 

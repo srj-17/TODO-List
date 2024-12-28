@@ -121,6 +121,32 @@ textarea {
     font-size: 0.9rem;
 }
 
+/* li */
+li {
+    list-style-type: none;
+}
+
+/* todos */
+.todo {
+    display: grid;
+    grid-auto-flow: column;
+    place-content: center;
+    gap: 20px;
+    background: var(--bg-todo);
+    padding: 8px 20px;
+    border-radius: var(--std-border-radius);
+}
+
+.todo > .buttons {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 8px;
+}
+
+.todo-completion-status > #complete {
+    width: 18px;
+}
+
 /* main page gets these stylings */
 .main {
     display: grid;
@@ -147,29 +173,9 @@ textarea {
              gap: var(--std-gap);
          }
 
-         ul.today-tasks > * {
-             display: grid;
-             grid-auto-flow: column;
-             place-content: center;
-             gap: 20px;
-             background: var(--bg-todo);
-             padding: 8px 20px;
-             border-radius: var(--std-border-radius);
-         }
-
          .add-task-btn {
              display: grid;
              place-content: center;
-         }
-
-         .todo > .buttons {
-             display: grid;
-             grid-auto-flow: column;
-             gap: 8px;
-         }
-
-         .todo-completion-status > #complete {
-             width: 18px;
          }
 
          .highest-priority-projects-container {
@@ -221,11 +227,13 @@ textarea {
     display: grid;
     gap: 20px;
     grid-template-areas: 
-        "return-button project-header project-header"
-        "project-list project-tasks project-tasks";
+        "return-button project-header tasks-header"
+        "project-list project-list project-tasks";
+    grid-template-columns: 1fr 1fr 8fr;
     padding: 20px;
 
     .return-button-container {
+        display: grid;
         grid-area: return-button;
     }
 
@@ -234,12 +242,49 @@ textarea {
         grid-area: project-header;
     }
 
-    .project-list {
+    .tasks-header {
+        font-size: 1.5rem;
+        grid-area: tasks-header;
+    }
+
+    .projects-list {
         grid-area: project-list;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .projects-list .project {
+        display: grid;
+        padding: var(--std-padding);
+        border-radius: var(--std-border-radius);
+        grid-template-areas: 
+            "project-name project-name"
+            "delete-project-bc add-task-bc";
+        gap: 4px;
+    }
+
+    .projects-list .project:hover {
+        background: var(--secondary);
+    }
+
+    .projects-list .project-name {
+        grid-area: project-name;
+        font-weight: bold;
+    }
+
+    .projects-list .delete-project-button-container {
+        grid-area: delete-project-bc;
+    }
+
+    .project-list .add-task-button-container {
+        grid-area: add-task-bc;
     }
 
     .project-tasks {
         grid-area: project-tasks;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
 }
 
