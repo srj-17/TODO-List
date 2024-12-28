@@ -17,6 +17,7 @@ let projectsHeader = `
     <div class="return-button-container">
         <button class="return-button"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#222"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></button>
     </div>
+    <div class="seperator"></div>
     <div class="projects-header">
         Projects
     </div>
@@ -97,14 +98,20 @@ function renderProjects() {
         addTaskButtonContainer.appendChild(addTaskButton);
         projectItem.appendChild(addTaskButtonContainer);
 
-        deleteProjectButton.addEventListener("click", () => {
-            user.deleteProject(projectItem.id);
+        deleteProjectButton.addEventListener("click", (event) => {
+            user.deleteProject(projectItem.id.split("-").at(1));
             renderProjects();
+
+            // to stop the delete button from also rendering the project 
+            // resulting in an error
+            event.stopPropagation();
         });
 
-        addTaskButton.addEventListener("click", () => {
-            addDialogs.changeTaskDialogFor(projectItem.id);
+        addTaskButton.addEventListener("click", (event) => {
+            addDialogs.changeTaskDialogFor(projectItem.id.split("-").at(1));
             addDialogs.addTaskDialog.show();
+
+            event.stopPropagation();
         });
 
         projectsList.appendChild(projectItem);
@@ -115,6 +122,7 @@ function renderProjects() {
     configureButtons(projects);
 }
 
+// TODO: make this work
 function renderFirstProject() {
     // querySelector selects the first node that matches the query
     let firstProjectName = projects.querySelector(".project-name");
@@ -122,8 +130,8 @@ function renderFirstProject() {
     if (firstProjectName) {
         let clickEvent = new Event("click", { bubbles: true });
         firstProjectName.dispatchEvent(clickEvent);
-        //let id = firstProject.id.split("-").at(1);
-        //renderProjectTasks(id, projects);
+        let id = firstProject.id.split("-").at(1);
+        renderProjectTasks(id, projects);
     } 
 }
 
@@ -240,8 +248,9 @@ function renderProjectPage() {
     renderProjects();
 
     projectsList.addEventListener("click", (event) => {
-        if (event.target.classList.contains("project-name")) {
-            let parentProject = event.target.parentElement;
+        // if it is inside of an item in project list
+        let parentProject = event.target.closest("li.project"); 
+        if (parentProject) {
             let projectId = parentProject.id.split("-").at(1);
 
             renderProjectTasks(projectId, projects);

@@ -227,9 +227,9 @@ li {
     display: grid;
     gap: 20px;
     grid-template-areas: 
-        "return-button project-header tasks-header"
-        "project-list project-list project-tasks";
-    grid-template-columns: 1fr 1fr 8fr;
+        "return-button project-header seperator tasks-header"
+        "project-list project-list . project-tasks";
+    grid-template-columns: 1fr 1fr 2px 8fr;
     padding: 20px;
 
     .return-button-container {
@@ -240,6 +240,11 @@ li {
     .projects-header {
         font-size: 1.5rem;
         grid-area: project-header;
+        display: flex;
+    }
+
+    .seperator {
+        background: var(--accent);
     }
 
     .tasks-header {
