@@ -86,7 +86,7 @@ function renderProjects() {
         deleteProjectButton.classList.toggle("delete-project-button");
         deleteProjectButton.textContent = "Delete project";
         deleteProjectButtonContainer.appendChild(deleteProjectButton);
-        projectItem.appendChild(deleteProjectButtonContainer);
+        //projectItem.appendChild(deleteProjectButtonContainer);
 
         // adding `add task` button
         let addTaskButtonContainer = document.createElement("div");
@@ -96,7 +96,13 @@ function renderProjects() {
         addTaskButton.textContent = "Add Task";
         addTaskButtonContainer.hidden = true;
         addTaskButtonContainer.appendChild(addTaskButton);
-        projectItem.appendChild(addTaskButtonContainer);
+        //projectItem.appendChild(addTaskButtonContainer);
+
+        let projectButtonsContainer = document.createElement("div");
+        projectButtonsContainer.classList.toggle("project-buttons");
+        projectButtonsContainer.appendChild(addTaskButtonContainer);
+        projectButtonsContainer.appendChild(deleteProjectButtonContainer);
+        projectItem.appendChild(projectButtonsContainer);
 
         deleteProjectButton.addEventListener("click", (event) => {
             user.deleteProject(projectItem.id.split("-").at(1));
