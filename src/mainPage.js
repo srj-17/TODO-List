@@ -2,6 +2,7 @@ import user from "./user"
 import addDialog from "./addDialogs";
 import domController from "./domController";
 import addDialogs from "./addDialogs";
+import localStorage from "./localStorage";
 
 let main = document.createElement("div");
 main.classList.toggle("main");
@@ -114,14 +115,6 @@ todayTasks.addEventListener("click", (event) => {
         let targetTodoId = temp[1];
         let targetTodoObject;
 
-        // if I decide to later on use todayTodos as project
-        //let targetProjectId = temp[0];
-        //if (+targetProjectId === 999) {
-        //    targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
-        //} else {
-        //    //for future reference: for other projects than todayTodos
-        //    targetTodoObject = user.at(targetProjectId).getTodos().at(targetTodoId)                
-
         targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
         targetTodoObject.status = (targetTodoObject.status) ? false : true;
         renderTasks();
@@ -144,6 +137,7 @@ todayTasks.addEventListener("click", (event) => {
             addDialogs.changeTaskDialogFor("999", id);
             addDialogs.editTaskDialog.showModal();
         }
+        user.storeTodayTodos();
     } 
     });
 
@@ -168,6 +162,8 @@ function renderMain() {
 
     // addDialogs is for the today's tasks on the mainpage
     body.appendChild(addDialog.addProjectDialog);
+
+    renderTasks();
 
     return removedProjects;
 };

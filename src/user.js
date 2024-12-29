@@ -5,10 +5,6 @@ import localStorage from './localStorage';
 const user = (function () {
     let projects = [];
 
-    document.addEventListener("DOMContentLoaded", () => {
-        localStorage.setProjects();
-    });
-
     // todayTodos will always have id 999
     let todayTodos = new project(999, "todayTodo");
     
@@ -50,18 +46,29 @@ const user = (function () {
     }
 
     function storeProjects() {
-        localStorage.storeLocally()
+        localStorage.storeLocally();
+    }
+
+    function setTodayTodos(localTodos) {
+        todayTodos = localTodos;
+        console.log(todayTodos)
+    }
+
+    function storeTodayTodos() {
+        localStorage.storeTodayTodos();
     }
 
     return { 
         addProject, 
         getProjects,
         getProject,
-        addTodayTodos: addTodayTodos,
-        getTodayTodos: getTodayTodos,
+        addTodayTodos,
+        getTodayTodos,
         deleteProject,
         setProjects,
         storeProjects,
+        setTodayTodos,
+        storeTodayTodos,
     };
 }) ();
 

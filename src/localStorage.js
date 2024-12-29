@@ -43,7 +43,36 @@ function setProjects() {
         });
         correctedLocProj =  correctedLocProj.concat(temp);
     });
+
     user.setProjects(correctedLocProj);
+}
+
+function setTodayTodos() {
+    let localTodayTodos = Array.from(JSON.parse(localStorage.getItem("todayTodos")));
+    if (!localTodayTodos) {
+        storeTodayTodosLocally();
+    } 
+
+    let todayProject = new Project("999", "todayTodos");
+    localTodayTodos.forEach((todo) => {
+        todayProject.addTodo(
+            todo.title,
+            todo.description,
+            todo.dueDate,
+            todo.priority,
+            todo.notes
+        );
+    });
+
+    user.setTodayTodos(todayProject);
+}
+
+function storeTodayTodosLocally() {
+    if (storageAvailable("localStorage")) {
+        localStorage.setItem("todayTodos", JSON.stringify(user.getTodayTodos().getTodos()));
+    } else {
+        console.log("LocalStorage Not available!")
+    }
 }
 
 function storeProjectsLocally() {
@@ -58,4 +87,6 @@ function storeProjectsLocally() {
 export default { 
     storeLocally: storeProjectsLocally,
     setProjects,
+    setTodayTodos,
+    storeTodayTodos: storeTodayTodosLocally,
 };

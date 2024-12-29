@@ -112,6 +112,7 @@ addTaskDialogButton.addEventListener("click", (event) => {
 
         // locally store
         user.storeProjects();
+        user.storeTodayTodos();
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
@@ -170,6 +171,7 @@ addProjectDialogButton.addEventListener("click", (event) => {
 
         // update projects in the localstorage
         user.storeProjects();
+        user.storeTodayTodos();
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
@@ -283,6 +285,7 @@ editTaskDialogButton.addEventListener("click", (event) => {
         }
 
         user.storeProjects();
+        user.storeTodayTodos();
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
