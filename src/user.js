@@ -47,7 +47,6 @@ const user = (function () {
     // for localStorage
     function setProjects(storedProjects) {
         projects = projects.concat(storedProjects);
-        console.log(storedProjects)
     }
 
     function storeProjects() {

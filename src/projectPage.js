@@ -128,7 +128,6 @@ function renderProjects() {
     configureButtons(projects);
 }
 
-// TODO: make this work
 function renderFirstProject() {
     // querySelector selects the first node that matches the query
     let firstProjectName = projects.querySelector(".project-name");
