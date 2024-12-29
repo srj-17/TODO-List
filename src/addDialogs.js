@@ -110,6 +110,9 @@ addTaskDialogButton.addEventListener("click", (event) => {
             projectPage.renderProjectTasks(projectId, projects);
         }
 
+        // locally store
+        user.storeProjects();
+
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
         if (addTaskDialog.hasAttribute("open")) {
@@ -164,6 +167,9 @@ addProjectDialogButton.addEventListener("click", (event) => {
     if (addProjectDialog.hasAttribute("open")) {
         let projectName = addProjectDialog.querySelector("#name").value;
         user.addProject(projectName);
+
+        // update projects in the localstorage
+        user.storeProjects();
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();
@@ -275,6 +281,8 @@ editTaskDialogButton.addEventListener("click", (event) => {
             let projects = document.querySelector(".projects");
             projectPage.renderProjectTasks(projectId, projects);
         }
+
+        user.storeProjects();
 
         // prevent the form from submitting, and instead just add the todos to the today's todo
         event.preventDefault();

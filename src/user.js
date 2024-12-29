@@ -1,8 +1,14 @@
 import project from './project';
+import localStorage from './localStorage';
 
 // we're assuming a single user todo app
 const user = (function () {
     let projects = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        localStorage.setProjects();
+    });
+
     // todayTodos will always have id 999
     let todayTodos = new project(999, "todayTodo");
     
@@ -38,12 +44,25 @@ const user = (function () {
         });
     }
 
-    return { addProject, 
+    // for localStorage
+    function setProjects(storedProjects) {
+        projects = projects.concat(storedProjects);
+        console.log(storedProjects)
+    }
+
+    function storeProjects() {
+        localStorage.storeLocally()
+    }
+
+    return { 
+        addProject, 
         getProjects,
         getProject,
         addTodayTodos: addTodayTodos,
         getTodayTodos: getTodayTodos,
         deleteProject,
+        setProjects,
+        storeProjects,
     };
 }) ();
 
