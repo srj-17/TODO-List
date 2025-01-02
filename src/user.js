@@ -1,75 +1,75 @@
-import project from './project';
-import localStorage from './localStorage';
+import project from "./project";
+import localStorage from "./localStorage";
 
 // we're assuming a single user todo app
 const user = (function () {
-    let projects = [];
+  let projects = [];
 
-    // todayTodos will always have id 999
-    let todayTodos = new project(999, "todayTodo");
-    
-    let addTodayTodos = (title, description, duedate, priority, notes) => {
-        return todayTodos.addTodo(title, description, duedate, priority, notes)
-    }
+  // todayTodos will always have id 999
+  let todayTodos = new project(999, "todayTodo");
 
-    let getTodayTodos = () => todayTodos;
+  let addTodayTodos = (title, description, duedate, priority, notes) => {
+    return todayTodos.addTodo(title, description, duedate, priority, notes);
+  };
 
-    function addProject(name) {
-        let id = projects.length;
-        
-        let newProject = new project(id, name);
-        projects.push(newProject);
-    };
+  let getTodayTodos = () => todayTodos;
 
-    function getProjects() {
-        return projects;
-    }
+  function addProject(name) {
+    let id = projects.length;
 
-    function getProject(id) {
-        return projects.at(id);
-    }
+    let newProject = new project(id, name);
+    projects.push(newProject);
+  }
 
-    // TODO: id of projects should be updated after deleting in DOM 
-    function deleteProject(id) {
-        let index = id;
-        projects.splice(index, 1);
+  function getProjects() {
+    return projects;
+  }
 
-        // reset the ids
-        projects.forEach((project, index) => {
-            project.id = index;
-        });
-    }
+  function getProject(id) {
+    return projects.at(id);
+  }
 
-    // for localStorage
-    function setProjects(storedProjects) {
-        projects = projects.concat(storedProjects);
-    }
+  // TODO: id of projects should be updated after deleting in DOM
+  function deleteProject(id) {
+    let index = id;
+    projects.splice(index, 1);
 
-    function storeProjects() {
-        localStorage.storeLocally();
-    }
+    // reset the ids
+    projects.forEach((project, index) => {
+      project.id = index;
+    });
+  }
 
-    function setTodayTodos(localTodos) {
-        todayTodos = localTodos;
-        console.log(todayTodos)
-    }
+  // for localStorage
+  function setProjects(storedProjects) {
+    projects = projects.concat(storedProjects);
+  }
 
-    function storeTodayTodos() {
-        localStorage.storeTodayTodos();
-    }
+  function storeProjects() {
+    localStorage.storeLocally();
+  }
 
-    return { 
-        addProject, 
-        getProjects,
-        getProject,
-        addTodayTodos,
-        getTodayTodos,
-        deleteProject,
-        setProjects,
-        storeProjects,
-        setTodayTodos,
-        storeTodayTodos,
-    };
-}) ();
+  function setTodayTodos(localTodos) {
+    todayTodos = localTodos;
+    console.log(todayTodos);
+  }
+
+  function storeTodayTodos() {
+    localStorage.storeTodayTodos();
+  }
+
+  return {
+    addProject,
+    getProjects,
+    getProject,
+    addTodayTodos,
+    getTodayTodos,
+    deleteProject,
+    setProjects,
+    storeProjects,
+    setTodayTodos,
+    storeTodayTodos,
+  };
+})();
 
 export default user;

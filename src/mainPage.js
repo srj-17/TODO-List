@@ -1,4 +1,4 @@
-import user from "./user"
+import user from "./user";
 import addDialog from "./addDialogs";
 import domController from "./domController";
 import addDialogs from "./addDialogs";
@@ -17,26 +17,25 @@ let todayTasksHeader = `
     `;
 todayTasksContainer.innerHTML = todayTasksHeader;
 
-
 // adding today's tasks dynamically
 let todayTasks = document.createElement("ul");
 todayTasks.classList.toggle("today-tasks");
 todayTasksContainer.appendChild(todayTasks);
 
 // storing today's tasks
-// decided to not show priority. 
-    // That is implied by the ordering of todos
-// TODO: maybe I can use the renderProjectTasks() from projectPage 
+// decided to not show priority.
+// That is implied by the ordering of todos
+// TODO: maybe I can use the renderProjectTasks() from projectPage
 // for this purpose
 function renderTasks() {
-    let todayTodoList = user.getTodayTodos().getTodos();
+  let todayTodoList = user.getTodayTodos().getTodos();
 
-    // empty the today's tasks and fill it back again
-    todayTasks.innerHTML = ``
+  // empty the today's tasks and fill it back again
+  todayTasks.innerHTML = ``;
 
-    let todayTasksHTML = ``
-    todayTodoList.forEach(todo => {
-        let todoItem = `
+  let todayTasksHTML = ``;
+  todayTodoList.forEach((todo) => {
+    let todoItem = `
             <li class="todo" id="${user.getTodayTodos().id}-${todo.id}">
                 <div class="todo-completion-status">
                     <input type="checkbox" id="complete" name="completed"  ${todo.status ? "checked" : "unchecked"}>
@@ -49,10 +48,10 @@ function renderTasks() {
                     <button class="edit-button">Edit</button>
                 </div>
             </li>
-            `
-        todayTasksHTML = todayTasksHTML + todoItem;
-    });
-    todayTasks.innerHTML = todayTasksHTML;
+            `;
+    todayTasksHTML = todayTasksHTML + todoItem;
+  });
+  todayTasks.innerHTML = todayTasksHTML;
 }
 
 let addTaskButtonContainer = document.createElement("div");
@@ -65,7 +64,7 @@ addTaskButtonContainer.appendChild(addTaskButton);
 // append the task button
 todayTasksContainer.appendChild(addTaskButtonContainer);
 
-let projectsContainer= document.createElement("div");
+let projectsContainer = document.createElement("div");
 projectsContainer.classList.toggle("highest-priority-projects-container");
 
 // add the add New Project button
@@ -87,7 +86,6 @@ seeAllProjectsButton.innerHTML = `
 `;
 seeAllProjectsButtonContainer.appendChild(seeAllProjectsButton);
 
-
 main.appendChild(todayTasksContainer);
 main.appendChild(projectsContainer);
 main.appendChild(addProjectButtonContainer);
@@ -95,77 +93,77 @@ main.appendChild(seeAllProjectsButtonContainer);
 
 // after adding all these, we have buttons
 addTaskButton.addEventListener("click", () => {
-    addDialogs.changeTaskDialogFor("999");
-    addDialog.addTaskDialog.showModal();
+  addDialogs.changeTaskDialogFor("999");
+  addDialog.addTaskDialog.showModal();
 });
 
-addProjectButton.addEventListener('click', () => {
-    addDialog.addProjectDialog.showModal();
+addProjectButton.addEventListener("click", () => {
+  addDialog.addProjectDialog.showModal();
 });
 
-seeAllProjectsButton.addEventListener('click', () => {
-    domController.renderProjects();
+seeAllProjectsButton.addEventListener("click", () => {
+  domController.renderProjects();
 });
 
 // for checkbox
 todayTasks.addEventListener("click", (event) => {
-    if (event.target.id === "complete") {
-        let targetTodo = event.target.closest(".todo");
-        let temp = targetTodo.id.split("-");
-        let targetTodoId = temp[1];
-        let targetTodoObject;
+  if (event.target.id === "complete") {
+    let targetTodo = event.target.closest(".todo");
+    let temp = targetTodo.id.split("-");
+    let targetTodoId = temp[1];
+    let targetTodoObject;
 
-        targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
-        targetTodoObject.status = (targetTodoObject.status) ? false : true;
-        renderTasks();
-    }
+    targetTodoObject = user.getTodayTodos().getTodos().at(targetTodoId);
+    targetTodoObject.status = targetTodoObject.status ? false : true;
+    renderTasks();
+  }
 });
 
 // for edit and delete todo
 todayTasks.addEventListener("click", (event) => {
-    let classList = event.target.parentNode.classList;
-    if (classList.contains("buttons")) {
-        if (event.target.classList.contains("delete-button")) {
-            let todoToDelete = event.target.closest(".todo");
-            let id = todoToDelete.id.split("-").at(1);
-            user.getTodayTodos().deleteTodo(id);
-            renderTasks();
-        } else if (event.target.classList.contains("edit-button")) {
-            let todoToEdit = event.target.closest(".todo");
-            let id = todoToEdit.id.split("-").at(1);
+  let classList = event.target.parentNode.classList;
+  if (classList.contains("buttons")) {
+    if (event.target.classList.contains("delete-button")) {
+      let todoToDelete = event.target.closest(".todo");
+      let id = todoToDelete.id.split("-").at(1);
+      user.getTodayTodos().deleteTodo(id);
+      renderTasks();
+    } else if (event.target.classList.contains("edit-button")) {
+      let todoToEdit = event.target.closest(".todo");
+      let id = todoToEdit.id.split("-").at(1);
 
-            addDialogs.changeTaskDialogFor("999", id);
-            addDialogs.editTaskDialog.showModal();
-        }
-        user.storeTodayTodos();
-    } 
-    });
+      addDialogs.changeTaskDialogFor("999", id);
+      addDialogs.editTaskDialog.showModal();
+    }
+    user.storeTodayTodos();
+  }
+});
 
 // get body of the current document, and attach the main elements to it
 function renderMain() {
-    let body = document.querySelector('body');
-    let removedProjects;
+  let body = document.querySelector("body");
+  let removedProjects;
 
-    // if no projects, returns null
-    let projects = body.querySelector(".projects");
-    if (projects) {
-        removedProjects = body.removeChild(projects);
-    }
+  // if no projects, returns null
+  let projects = body.querySelector(".projects");
+  if (projects) {
+    removedProjects = body.removeChild(projects);
+  }
 
-    // tasks
-    body.appendChild(main);
+  // tasks
+  body.appendChild(main);
 
-    // non-visible elements at the bottom
-    body.appendChild(addDialog.addTaskDialog);
+  // non-visible elements at the bottom
+  body.appendChild(addDialog.addTaskDialog);
 
-    body.appendChild(addDialog.editTaskDialog);
+  body.appendChild(addDialog.editTaskDialog);
 
-    // addDialogs is for the today's tasks on the mainpage
-    body.appendChild(addDialog.addProjectDialog);
+  // addDialogs is for the today's tasks on the mainpage
+  body.appendChild(addDialog.addProjectDialog);
 
-    renderTasks();
+  renderTasks();
 
-    return removedProjects;
-};
+  return removedProjects;
+}
 
 export default { renderMain, renderTasks };
