@@ -51,7 +51,6 @@ const user = (function () {
 
   function setTodayTodos(localTodos) {
     todayTodos = localTodos;
-    console.log(todayTodos);
   }
 
   function storeTodayTodos() {

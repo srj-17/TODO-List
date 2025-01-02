@@ -25,15 +25,36 @@ function setProjects() {
   const localProjects = JSON.parse(localStorage.getItem("projects"));
   if (!localProjects) {
     storeProjectsLocally();
+  } else {
+    let correctedLocProj = [];
+    localProjects.forEach((project, index) => {
+      const temp = new Project(index, project.name);
+
+      let projectTodos = project.todoList;
+      projectTodos.forEach((todo) => {
+        temp.addTodo(
+          todo.title,
+          todo.description,
+          todo.dueDate,
+          todo.priority,
+          todo.notes,
+        );
+      });
+      correctedLocProj = correctedLocProj.concat(temp);
+    });
+
+    user.setProjects(correctedLocProj);
   }
+}
 
-  let correctedLocProj = [];
-  localProjects.forEach((project, index) => {
-    const temp = new Project(index, project.name);
-
-    let projectTodos = project.todoList;
-    projectTodos.forEach((todo) => {
-      temp.addTodo(
+function setTodayTodos() {
+  const localTodayTodos = JSON.parse(localStorage.getItem("todayTodos"));
+  if (!localTodayTodos) {
+    storeTodayTodosLocally();
+  } else {
+    const todayProject = new Project("999", "todayTodos");
+    localTodayTodos.forEach((todo) => {
+      todayProject.addTodo(
         todo.title,
         todo.description,
         todo.dueDate,
@@ -41,29 +62,9 @@ function setProjects() {
         todo.notes,
       );
     });
-    correctedLocProj = correctedLocProj.concat(temp);
-  });
 
-  user.setProjects(correctedLocProj);
-}
-
-function setTodayTodos() {
-  let localTodayTodos = JSON.parse(localStorage.getItem("todayTodos"));
-  if (!localTodayTodos) {
-    storeTodayTodosLocally();
+    user.setTodayTodos(todayProject);
   }
-  const todayProject = new Project("999", "todayTodos");
-  localTodayTodos.forEach((todo) => {
-    todayProject.addTodo(
-      todo.title,
-      todo.description,
-      todo.dueDate,
-      todo.priority,
-      todo.notes,
-    );
-  });
-
-  user.setTodayTodos(todayProject);
 }
 
 function storeTodayTodosLocally() {
